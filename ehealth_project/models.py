@@ -19,8 +19,6 @@ class UserProfile(models.Model):
 class Folder(models.Model):
 	# User folder belongs to
 	user = models.ForeignKey(UserProfile)
-	# foreign key
-	parent_folder = models.ForeignKey('self',null=True,blank=True)
 	# name of the folder
 	name = models.CharField(max_length=128)
 	# status of the privacy of the folder
@@ -39,8 +37,6 @@ class Page(models.Model):
 	source = models.CharField(max_length=128, unique=True)
 	# short summary of the page contents
 	summary = models.TextField()
-	# the time of the last access to the page
-	last_access = models.DateTimeField()
 	# scores used to determine how good the page is
 	readability_score = models.IntegerField(default=0)
 	objectivity_score = models.IntegerField(default=0)
