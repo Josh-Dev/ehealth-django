@@ -28,13 +28,13 @@ class Folder(models.Model):
 
 class Page(models.Model):
 	# title of the Page
-	title = models.CharField(max_length=128, unique=True)
+	title = models.CharField(max_length=128)
 	# the parent folder of this page
 	folder = models.ForeignKey(Folder)
 	# url of the page
 	url = models.URLField()
 	# source used to get the page
-	source = models.CharField(max_length=128, unique=True)
+	source = models.CharField(max_length=128)
 	# short summary of the page contents
 	summary = models.TextField()
 	# scores used to determine how good the page is
