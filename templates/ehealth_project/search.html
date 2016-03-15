@@ -1,5 +1,4 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
+{% extends 'ehealth_project/base.html' %}
 {% block title %} Search {% endblock %}
 {% block body_block %}
 <!--Alert area-->
@@ -9,7 +8,7 @@
 </div>
 <!--Main Search-->
 <div class="container eh-searchcontainer">
-    <form id="search_form" method="GET" action="{% url 'basicsearch'}">
+    <form id="search_form" method="GET" action="{% url 'basic_search' %}">
         <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Use Our Search</h2>
         <div style="display:inline-block">
             <input type="text" name="searchTerms" id="searchTerms" class="form-control" placeholder="e.g. Diabetes, Chemotherapy, Help"/>

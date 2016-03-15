@@ -52,7 +52,14 @@ def register(request):
 def advanced_search(request):
     return render(request,'ehealth_projects/base.html', {})
 
-def search(request):
+def basic_search(request):
     context_dict = {}
     return render(request, 'ehealth_project/search.html',context_dict)
 
+def about(request):
+    context_dict = {}
+    return render(request, 'ehealth_project/search.html',context_dict)
+
+def how(request):
+    context_dict = {}
+    return render(request, 'ehealth_project/search.html',context_dict)
