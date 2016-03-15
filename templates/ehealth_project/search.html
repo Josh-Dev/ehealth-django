@@ -1,0 +1,21 @@
+{% extends 'ehealth_project/base.html' %}
+{% load staticfiles %}
+{% block title %} Search { % endblock %}
+{% block body_block %}
+<!--Alert area-->
+<div class="alert alert-info fade in" >
+     <a href="#" class="close" data-dismiss="alert">&times;</a>
+     You can get more out of this if you register with an account, it's free! <a class="text-right" href="{% url 'register' %}">Register</a>
+</div>
+<!--Main Search-->
+<div class="container eh-searchcontainer">
+    <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Use Our Search</h2>
+    <div style="display:inline">
+        <input type="text" name="searchTerms" class="form-control" placeholder="e.g. Diabetes, Chemotherapy, Help"/>
+        <button type="submit" class="btn btn-default">Search</button>
+    </div>
+    <p>If you need to be more specific, try our <a href="{% url 'advanced_search' %}">Advanced Search</a>...</p>
+    
+</div>
+{% endblock %}
+{% endblock %}
