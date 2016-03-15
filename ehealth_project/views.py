@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from ehealth_project.forms import UserForm, UserProfileForm
 
 
 def register(request):
