@@ -28,13 +28,13 @@
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{% url 'manage account'}">Hi Mary</a></li>
-                    <li><a href="{% url 'auth_logout'}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="{% url 'manage account' %}">Hi Mary</a></li>
+                    <li><a href="{% url 'auth_logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
                 {% else %}
                 <ul>
-                    <li><a href="{% url 'registration_register'}">Register</a></li>
-                    <li><a href="{% url 'auth_login'}">Login</a></li>
+                    <li><a href="{% url 'registration_register' %}">Register</a></li>
+                    <li><a href="{% url 'auth_login' %}">Login</a></li>
                 </ul>
                 {% endif %}
 
