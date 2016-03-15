@@ -18,7 +18,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=128)),
                 ('privacy', models.BooleanField(default=False)),
-                ('parent_folder', models.ForeignKey(to='ehealth_project.Folder', null=True)),
             ],
             options={
             },
@@ -28,11 +27,10 @@ class Migration(migrations.Migration):
             name='Page',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(unique=True, max_length=128)),
+                ('title', models.CharField(max_length=128)),
                 ('url', models.URLField()),
-                ('source', models.CharField(unique=True, max_length=128)),
+                ('source', models.CharField(max_length=128)),
                 ('summary', models.TextField()),
-                ('last_access', models.DateTimeField()),
                 ('readability_score', models.IntegerField(default=0)),
                 ('objectivity_score', models.IntegerField(default=0)),
                 ('sentimentality_score', models.IntegerField(default=0)),
