@@ -4,9 +4,8 @@
     <data-source source="LOCAL" name="Django default" uuid="694bfa96-7749-4383-a61f-110b653a1689">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:H:\Workspace\Webapp\Group Project\ehealth-django\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\Jack\workspace\WAD_Group_project\ehealth-django\db.sqlite3</jdbc-url>
       <libraries />
     </data-source>
   </component>
 </project>
-
