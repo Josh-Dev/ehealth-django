@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} Advanced Search { % endblock %}
+{% block body_block %}
+<form id="search_form" method="GET" action="{% url 'advancedsearch'}">
+    <div class="container eh-advanced-searchbar">
+        <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Advanced Search</h2>
+        <div style="display:inline">
+            <input type="text" name="searchTerms" id="searchTerms" class="form-control" placeholder="e.g. Diabetes, Chemotherapy, Help"/>
+            <button type="submit" class="btn btn-default">Search</button>
+        </div>
+        <p>Too much? <a href="{% url 'search' %}">Back to basic</a>...</p>
+    </div>
+    <div class="container">
+        <h3>Refine your search</h3>
+        <fieldset>
+            
+        </fieldset>
+    </div>
+</form>
+
+{% endblock %}
