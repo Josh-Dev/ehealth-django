@@ -7,8 +7,8 @@ django.setup()
 from ehealth_project.models import Folder, Page, UserProfile
 from django.contrib.auth.models import User
 
-generic_user = User(username="George", password="george", email="george@george.com")
-generic_user_profile = UserProfile(user=generic_user, dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human")
+generic_user = User.objects.get_or_create(username="John", password="1234", email="Gdgsadfa@fdafds.com",is_superuser=False, is_staff=False)[0]
+generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human")[0]
 
 def populate():
 

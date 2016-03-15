@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+<<<<<<< HEAD
 TEMPLATE_PATH =os.path.join(BASE_DIR, 'templates')
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
 
@@ -20,6 +21,8 @@ TEMPLATE_DIRS = (
 
     )
     
+=======
+>>>>>>> 9daad9429ca5c1635e9ee72dd0357f0d160d9628
 
 
 # Quick-start development settings - unsuitable for production
