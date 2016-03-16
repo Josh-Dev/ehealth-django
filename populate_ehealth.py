@@ -8,7 +8,7 @@ from ehealth_project.models import Folder, Page, UserProfile
 from django.contrib.auth.models import User
 
 generic_user = User.objects.get_or_create(username="John", password="1234", email="Gdgsadfa@fdafds.com",is_superuser=False, is_staff=False)[0]
-generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human")[0]
+generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human", name)[0]
 
 def populate():
 
@@ -38,6 +38,21 @@ def populate():
 	for f in Folder.objects.all():
 		for p in Page.objects.filter(folder=f):
 			print "- {0} - {1}".format(str(f), str(p))
+
+	generic_user = User.objects.get_or_create(username="John", password="1234", email="Gdgsadfa@fdafds.com",is_superuser=False, is_staff=False)[0]
+	generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human")[0]
+
+	add_user(username="Jeffery", password="4321", email="jj@email.com",dob="1980-05-12", address_1 = "123 Fake avenue",address_2="Fakeshire", city="Fakeville", post_code= "G14 2FH", gender="Female")
+
+	add_user(username="Geoff", password="4235", email="gg@email.com",dob="1987-05-12", address_1 = "123 Fake lane",address_2="Fakeshire", city="Fakeville", post_code= "G16 2FD", gender="Male")
+
+	add_user(username="Sam", password="4321", email="jj@email.com",dob="1980-05-12", address_1 = "123 Fakeavenue",address_2="Fakeshire", city="Fakeville", post_code= "G14 2FH", gender="Female")
+
+def add_user(username, password, email, dob, add_1, add_2, city, post_code, gender):
+	u = User.objects.get_or_create(username=username,password=password, email=email, False, False)
+	up = UserProfile.objects.get_or_create(u,dob,add_1,add_2,city,post_code, gender)
+	up.save()
+	return up
 
 def add_page(folder, title, url, source, summary, readability_score, objectivity_score,sentimentality_score):
 	p = Page.objects.get_or_create(title=title,folder=folder, url=url,source=source,summary=summary,readability_score=readability_score,objectivity_score=objectivity_score,sentimentality_score=sentimentality_score)[0]

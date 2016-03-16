@@ -1,6 +1,32 @@
 from django.shortcuts import render
+from ehealth_project.models import UserProfile
 from ehealth_project.forms import UserForm,UserProfileForm
 
+def saved_pages(request):
+    return render(request,'ehealth_projects/base.html', {})
+
+def manage_account(request):
+    return render(request,'ehealth_projects/base.html', {})
+
+def user_finder(request):
+
+    all_users = UserProfile.objects.all()
+    context_dict={'users':all_users}
+
+    if request.method == 'POST':
+
+        user_finder_form = UserFinderForm(data=request.POST)
+        if user_finder_form.is_valid():
+            #The username input to search through current users
+            search_username = user_finder_form.save()
+
+        else:
+            print user_finder_form.errors
+
+    else:
+        user_finder_form = UserFinderForm()
+
+    return render(request,'ehealth_project/user_finder.html',context_dict)
 
 def register(request):
     registered = False
@@ -45,7 +71,7 @@ def register(request):
 
    
     return render(request,
-            'rango/register.html',
+            'ehealth_project/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
 
