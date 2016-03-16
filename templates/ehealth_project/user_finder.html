@@ -1,0 +1,16 @@
+{% extends 'ehealth_project/base.html' %}
+{% block title %} User Finder {%  endblock %}
+{% block body_block %}
+    <h1> Users: </h1>
+    {% if users %}
+        <ul>
+            {% for userprof in users %}
+                {% if not userprof.user.is_superuser %}
+                <li>{{ userprof.user.username }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% else %}
+            <strong>No users.</strong>
+    {% endif %}
+{% endblock %}

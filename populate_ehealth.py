@@ -7,12 +7,12 @@ django.setup()
 from ehealth_project.models import Folder, Page, UserProfile
 from django.contrib.auth.models import User
 
-generic_user = User.objects.get_or_create(username="John", password="1234", email="Gdgsadfa@fdafds.com",is_superuser=False, is_staff=False)[0]
-generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human", name)[0]
-
 def populate():
 
-	test_cat_1 = add_cat(user= generic_user_profile,name="TEST_CAT_1",privacy=True)
+	generic_user = User.objects.get_or_create(username="John", password="1234", email="Gdgsadfa@fdafds.com",is_superuser=False, is_staff=False)[0]
+	generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human")[0]
+
+	test_cat_1 = add_cat(generic_user_profile,"TEST_CAT_1",True)
 	
 	add_page(folder=test_cat_1,title="page_1",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=57,objectivity_score=45,sentimentality_score=65)
 	
@@ -42,15 +42,20 @@ def populate():
 	generic_user = User.objects.get_or_create(username="John", password="1234", email="Gdgsadfa@fdafds.com",is_superuser=False, is_staff=False)[0]
 	generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human")[0]
 
-	add_user(username="Jeffery", password="4321", email="jj@email.com",dob="1980-05-12", address_1 = "123 Fake avenue",address_2="Fakeshire", city="Fakeville", post_code= "G14 2FH", gender="Female")
+	add_user(username="Jeffery", password="4321", email="jj@email.com",dob="1980-05-12", add_1 = "123 Fake Avenue",add_2="Fakeshire", city="Fakeville", post_code= "G14 2FH", gender="Female")
 
-	add_user(username="Geoff", password="4235", email="gg@email.com",dob="1987-05-12", address_1 = "123 Fake lane",address_2="Fakeshire", city="Fakeville", post_code= "G16 2FD", gender="Male")
+	add_user(username="Geoff", password="4235", email="gg@email.com",dob="1987-05-12", add_1 = "123 Fake Lane",add_2="Fakeshire", city="Fakeville", post_code= "G16 2FD", gender="Male")
 
-	add_user(username="Sam", password="4321", email="jj@email.com",dob="1980-05-12", address_1 = "123 Fakeavenue",address_2="Fakeshire", city="Fakeville", post_code= "G14 2FH", gender="Female")
+	add_user(username="Sam", password="4321", email="jj@email.com",dob="1980-05-12", add_1 = "123 Fake Road",add_2="Fakeshire", city="Fakeshire", post_code= "G11 2ER", gender="Male")
+
+	add_user(username="Fred", password="7455", email="fred@email.com",dob="1987-11-02", add_1 = "123 Fake Street",add_2="Fakeshire", city="Faketown", post_code= "G12 2FJ", gender="Female")
+
+	for u in UserProfile.objects.all():
+		print "-{0}".format(str(u))
 
 def add_user(username, password, email, dob, add_1, add_2, city, post_code, gender):
-	u = User.objects.get_or_create(username=username,password=password, email=email, False, False)
-	up = UserProfile.objects.get_or_create(u,dob,add_1,add_2,city,post_code, gender)
+	u = User.objects.get_or_create(username=username,password=password, email=email, is_superuser=False, is_staff=False)[0]
+	up = UserProfile.objects.get_or_create(user=u,dob=dob,address_1=add_1,address_2=add_2,city=city,post_code=post_code, gender=gender)[0]
 	up.save()
 	return up
 

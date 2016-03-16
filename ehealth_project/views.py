@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from ehealth_project.models import UserProfile
-from ehealth_project.forms import UserForm,UserProfileForm
+from ehealth_project.forms import UserForm,UserProfileForm,UserFinderForm
 
 def saved_pages(request):
     return render(request,'ehealth_projects/base.html', {})

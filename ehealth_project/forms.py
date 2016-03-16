@@ -14,3 +14,10 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('age',)
+
+class UserFinderForm(forms.ModelForm):
+    username = forms.CharField(max_length=128, help_text="Please enter a username")
+
+    class Meta:
+        model = User
+        fields = ('username',)
