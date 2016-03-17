@@ -11,17 +11,18 @@ def manage_account(request):
 
 def user_finder(request):
     qd = request.GET
-    users = User.objects.all().order_by('-username')[:-1]
+    users = User.objects.all().order_by('username')
     query_string = None
 
     if u'search_bar' in qd:
         query_string = str(qd[u'search_bar']).strip()
+        if query_string.__contains__("@"):
+            users = users.filter(email = query_string)
+        else:
+            users = users.filter(username__contains = query_string)
+    user_profs = UserProfile.objects.all().filter(user__in=users)
 
-        users = users.filter(username__contains = query_string)
-
-
-
-    return render(request,'ehealth_project/user_finder.html', {'users': users})
+    return render(request,'ehealth_project/user_finder.html', {'users': users, 'user_profs':user_profs})
 
 
 """
