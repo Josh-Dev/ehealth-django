@@ -35,7 +35,7 @@ def searchBing(request):
     result_list = []
 
     if request.method == 'POST':
-        query = request.POST['query'].strip()
+        query = request.POST['searchTerms'].strip()
 
         if query:
             # Run our Bing function to get the results list!
@@ -48,7 +48,7 @@ def searchHealthFinder(request):
     result_list = []
 
     if request.method == 'POST':
-        query = request.POST['query'].strip()
+        query = request.POST['searchTerms'].strip()
 
         if query:
             # Run our Bing function to get the results list!
@@ -61,7 +61,7 @@ def searchMedLine(request):
     result_list = []
 
     if request.method == 'POST':
-        query = request.POST['query'].strip()
+        query = request.POST['searchTerms'].strip()
 
         if query:
             # Run our medLine function to get the results list!
