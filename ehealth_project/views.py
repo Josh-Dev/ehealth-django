@@ -62,6 +62,21 @@ def searchMedLine(request):
             result_list = run_queryMed(query)
 
     return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+
+def searchAll(request):
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+        if query:
+            results_Bing = run_query(query)
+            results_HF = run_queryHF(query)
+            results_Med = run_queryMed(query)
+            result_list.extend(results_Bing)
+            result_list.extend(results_HF)
+            result_list.extend(results_Med)
+    random.shuffle(result_list,random.random)
+    return render(request,'rango/search.html',{'result_list':result_list})
 """
 def register(request):
     registered = False
