@@ -1,6 +1,68 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
+from ehealth_project.models import UserProfile
+from ehealth_project.forms import UserForm,UserProfileForm,UserFinderForm
+
+def saved_pages(request):
+    return render(request,'ehealth_project/base.html', {})
+
+def manage_account(request):
+    return render(request,'ehealth_project/base.html', {})
+
+def user_finder(request):
+    qd = request.GET
+    users = User.objects.all()
+    query_string = None
+
+    if u'search_bar' in qd:
+        query_string = str(qd[u'search_bar']).strip()
+
+        users = users.filter(username = query_string)
 
 
+    return render(request,'ehealth_project/user_finder.html', {'users': users})
+
+
+"""
+def searchBing(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+
+    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+
+def searchHealthFinder(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_queryHF(query)
+
+    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+
+def searchMedLine(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our medLine function to get the results list!
+            result_list = run_queryMed(query)
+
+    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+"""
 def register(request):
     registered = False
 
@@ -44,18 +106,14 @@ def register(request):
 
    
     return render(request,
-            'rango/register.html',
+            'ehealth_project/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
 
 def advanced_search(request):
-    return render(request,'ehealth_projects/base.html', {})
+    return render(request,'ehealth_project/base.html', {})
 
 def basic_search(request):
-    context_dict = {}
-    return render(request, 'ehealth_project/search.html',context_dict)
-
-def how(request):
     context_dict = {}
     return render(request, 'ehealth_project/search.html',context_dict)
 
@@ -63,3 +121,6 @@ def about(request):
     context_dict = {}
     return render(request, 'ehealth_project/search.html',context_dict)
 
+def how(request):
+    context_dict = {}
+    return render(request, 'ehealth_project/search.html',context_dict)

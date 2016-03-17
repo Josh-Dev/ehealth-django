@@ -1,5 +1,4 @@
 ﻿<!DOCTYPE html>
-
 {% load staticfiles %}
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -25,12 +24,12 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'savedPages'}">My Pages</a></li>
+                    <li><a href="{% url 'saved_pages' %}">My Pages</a></li>
                     {% endif %}
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{% url 'manage account' %}">Hi Mary</a></li>
+                    <li><a href="{% url 'manage_account' %}">Hi Mary</a></li>
                     <li><a href="{% url 'auth_logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
                 {% else %}
@@ -65,7 +64,7 @@
      </footer>
      <!--End footer-->
     <link href="https://bootswatch.com/cerulean/bootstrap.min.css" rel="stylesheet" />
-    <link href="{% static 'eHealth.css' %}" rel="stylesheet" />
+    <link href="{% static 'stylesheets/eHealth.css' %}" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>

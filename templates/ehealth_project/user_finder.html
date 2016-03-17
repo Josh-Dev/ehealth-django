@@ -1,0 +1,29 @@
+{% extends 'ehealth_project/base.html' %}
+{% load static %}
+{% block title %} User Finder {%  endblock %}
+{% block body_block %}
+
+    <form id="user_finder_form" method="get" action="/ehealth/user_finder/">
+        <label for="user_search_bar"> Search: </label>
+        <input type="text" name="search_bar" id="user_search_bar" placeholder="Name or email"/>
+        <input type="submit" value="Go"/>
+    </form>
+
+    <a href="{% url 'user_finder' %}">show all</a>
+
+    <h3> Users: </h3>
+    {% if users %}
+        <ul>
+            {% for u in users %}
+                {% if not u.is_superuser %}
+                <li>
+                    {{ u.username }}
+                    <img href="{% static 'images/blank.jpg' %}" alt="Profile pic">
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% else %}
+            <strong>No users.</strong>
+    {% endif %}
+{% endblock %}

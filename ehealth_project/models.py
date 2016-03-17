@@ -6,6 +6,7 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	# date of birth of User
 	dob = models.DateField()
+	age = models.IntegerField(default=18)
 	# address of the user
 	address_1 = models.CharField(max_length=128)
 	address_2 = models.CharField(max_length=128, blank=True)
@@ -13,6 +14,8 @@ class UserProfile(models.Model):
 	post_code = models.CharField(max_length=8)
 	# Gender of the user
 	gender = models.CharField(max_length=128)
+	#Image for the profile ( avatar )
+	pic = models.ImageField(blank=True,default='/static/image.jpg')
 	def __unicode__(self):
 		return self.user.username
 		
