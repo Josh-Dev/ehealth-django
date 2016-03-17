@@ -81,7 +81,7 @@ def searchAll(request):
             result_list.extend(results_HF)
             result_list.extend(results_Med)
     random.shuffle(result_list,random.random)
-    return render(request,'rango/search3.html',{'result_list':result_list})
+    return render(request,'rango/search.html',{'result_list':result_list})
 """
 def register(request):
     registered = False
