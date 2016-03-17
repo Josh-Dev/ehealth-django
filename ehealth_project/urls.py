@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 from ehealth_project import views
 
 urlpatterns = patterns('',
-    url(r'^$', views.basic_search, name='basic_search'),
+    url(r'^$', views.searchAll, name='basic_search'),
     url(r'^about/$', views.about, name='about'),
     url(r'^how/$', views.how, name='how'),
     url(r'^register/$', views.register, name='register'),

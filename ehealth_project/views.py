@@ -2,6 +2,11 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from ehealth_project.models import UserProfile
 from ehealth_project.forms import UserForm,UserProfileForm,UserFinderForm
+from ehealth_project.medLine_search import run_queryMed
+from ehealth_project.healthFinder_search import run_queryHF
+from ehealth_project.bing_Search import run_query
+from django.http import HttpResponseRedirect, HttpResponse
+import random
 
 def saved_pages(request):
     return render(request,'ehealth_project/base.html', {})
@@ -23,7 +28,7 @@ def user_finder(request):
     return render(request,'ehealth_project/user_finder.html', {'users': users})
 
 
-"""
+
 def searchBing(request):
 
     result_list = []
@@ -35,7 +40,7 @@ def searchBing(request):
             # Run our Bing function to get the results list!
             result_list = run_query(query)
 
-    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
 
 def searchHealthFinder(request):
 
@@ -48,7 +53,7 @@ def searchHealthFinder(request):
             # Run our Bing function to get the results list!
             result_list = run_queryHF(query)
 
-    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
 
 def searchMedLine(request):
 
@@ -61,13 +66,13 @@ def searchMedLine(request):
             # Run our medLine function to get the results list!
             result_list = run_queryMed(query)
 
-    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
 
 def searchAll(request):
     result_list = []
 
     if request.method == 'POST':
-        query = request.POST['query'].strip()
+        query = request.POST['searchTerms'].strip()
         if query:
             results_Bing = run_query(query)
             results_HF = run_queryHF(query)
@@ -76,8 +81,8 @@ def searchAll(request):
             result_list.extend(results_HF)
             result_list.extend(results_Med)
     random.shuffle(result_list,random.random)
-    return render(request,'rango/search.html',{'result_list':result_list})
-"""
+    return render(request,'ehealth_project/search.html',{'result_list':result_list})
+
 def register(request):
     registered = False
 
