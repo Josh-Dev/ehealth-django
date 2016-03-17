@@ -28,6 +28,46 @@ def user_finder(request):
 
     return render(request,'ehealth_project/user_finder.html',context_dict)
 
+"""
+def searchBing(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+
+    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+
+def searchHealthFinder(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_queryHF(query)
+
+    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+
+def searchMedLine(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['query'].strip()
+
+        if query:
+            # Run our medLine function to get the results list!
+            result_list = run_queryMed(query)
+
+    return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+"""
 def register(request):
     registered = False
 
