@@ -16,13 +16,14 @@ def manage_account(request):
 
 def user_finder(request):
     qd = request.GET
-    users = User.objects.all()
+    users = User.objects.all().order_by('-username')[:-1]
     query_string = None
 
     if u'search_bar' in qd:
         query_string = str(qd[u'search_bar']).strip()
 
-        users = users.filter(username = query_string)
+        users = users.filter(username__contains = query_string)
+
 
 
     return render(request,'ehealth_project/user_finder.html', {'users': users})
