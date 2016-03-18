@@ -175,3 +175,18 @@ def about(request):
 def how(request):
     context_dict = {}
     return render(request, 'ehealth_project/search.html',context_dict)
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/ehealth/')
+            else:
+                return HttpResponse("Your Ehealth account is disabled.")
+        else:
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'ehealth_project/login.html', {})
