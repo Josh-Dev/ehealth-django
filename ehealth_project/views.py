@@ -18,18 +18,18 @@ def manage_account(request):
     return render(request,'ehealth_project/base.html', {})
 
 def user_profile(request,username,current_folder=None):
+    # Get the user with the specified username
     user = User.objects.all().get(username=username)
     user_prof = UserProfile.objects.all().get(user=user)
+
     current_pages=None
 
-    print current_folder
-
+    # gets all the public folders from the user, and if a current folder has been selected then the current_folder is set to
+    # the current_folder passed to the view.  Gets all the pages in the current_folder.
     users_public_folders = Folder.objects.filter(user=user_prof, privacy=False)
     if current_folder:
         current_folder = Folder.objects.all().get(name=current_folder)
         current_pages = Page.objects.all().filter(folder=current_folder)
-
-    print current_folder,current_pages
 
     context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder}
 
@@ -37,10 +37,12 @@ def user_profile(request,username,current_folder=None):
 
 
 def user_finder(request):
-    qd = request.GET
+    qd = request.GET #gets a query dictionary
     users = User.objects.all().order_by('username')
     query_string = None
 
+    #if the user tried to search then get the query string and find a user with a username or email matching
+    #the query string
     if u'search_bar' in qd:
         query_string = str(qd[u'search_bar']).strip()
         if query_string.__contains__("@"):
