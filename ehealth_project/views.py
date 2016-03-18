@@ -1,14 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from ehealth_project.models import UserProfile,Folder,Page
+from ehealth_project.models import UserProfile
 from ehealth_project.forms import UserForm,UserProfileForm,UserFinderForm
 from ehealth_project.medLine_search import run_queryMed
 from ehealth_project.healthFinder_search import run_queryHF
 from ehealth_project.bing_Search import run_query
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import authenticate, login
-
-
 import random
 
 def saved_pages(request):
@@ -34,7 +30,6 @@ def user_profile(request,username,current_folder=None):
     context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder}
 
     return render(request,'ehealth_project/user_profile.html', context_dict)
-
 
 def user_finder(request):
     qd = request.GET #gets a query dictionary
@@ -79,7 +74,7 @@ def searchHealthFinder(request):
             # Run our Bing function to get the results list!
             result_list = run_queryHF(query)
 
-    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+    #return render(request, 'ehealth_project/results.html.html', {'result_list': result_list})
 
 def searchMedLine(request):
 
@@ -101,21 +96,21 @@ def searchAll(request):
         query = request.GET.get('searchTerms');
         if query:
             results_Bing = run_query(query)
-            #results_HF = run_queryHF(query)
-            #results_Med = run_queryMed(query)
+            results_HF = run_queryHF(query)
+            results_Med = run_queryMed(query)
             result_list.extend(results_Bing)
-            #result_list.extend(results_HF)
-            #result_list.extend(results_Med)
+            result_list.extend(results_HF)
+            result_list.extend(results_Med)
 
     if request.method == 'POST':
         query = request.POST['searchTerms'].strip()
         if query:
             results_Bing = run_query(query)
-            #results_HF = run_queryHF(query)
-            #results_Med = run_queryMed(query)
+            results_HF = run_queryHF(query)
+            results_Med = run_queryMed(query)
             result_list.extend(results_Bing)
-            #result_list.extend(results_HF)
-            #result_list.extend(results_Med)
+            result_list.extend(results_HF)
+            result_list.extend(results_Med)
     random.shuffle(result_list,random.random)
     return render(request,'ehealth_project/results.html',{'result_list':result_list})
 
@@ -180,20 +175,3 @@ def about(request):
 def how(request):
     context_dict = {}
     return render(request, 'ehealth_project/search.html',context_dict)
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-
-        if user:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect('/ehealth/')
-            else:
-                return HttpResponse("Your Ehealth account is disabled.")
-        else:
-            print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponse("Invalid login details supplied.")
-    else:
-        return render(request, 'ehealth_project/login.html', {})
