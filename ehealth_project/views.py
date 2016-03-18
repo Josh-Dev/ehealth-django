@@ -72,18 +72,28 @@ def searchMedLine(request):
 
 def searchAll(request):
     result_list = []
+    
+    if request.method == 'GET':
+        query = request.GET.get('searchTerms');
+        if query:
+            results_Bing = run_query(query)
+            #results_HF = run_queryHF(query)
+            #results_Med = run_queryMed(query)
+            result_list.extend(results_Bing)
+            #result_list.extend(results_HF)
+            #result_list.extend(results_Med)
 
     if request.method == 'POST':
         query = request.POST['searchTerms'].strip()
         if query:
             results_Bing = run_query(query)
-            results_HF = run_queryHF(query)
-            results_Med = run_queryMed(query)
+            #results_HF = run_queryHF(query)
+            #results_Med = run_queryMed(query)
             result_list.extend(results_Bing)
-            result_list.extend(results_HF)
-            result_list.extend(results_Med)
+            #result_list.extend(results_HF)
+            #result_list.extend(results_Med)
     random.shuffle(result_list,random.random)
-    return render(request,'ehealth_project/search.html',{'result_list':result_list})
+    return render(request,'ehealth_project/results.html',{'result_list':result_list})
 
 def register(request):
     registered = False
@@ -133,7 +143,7 @@ def register(request):
 
 
 def advanced_search(request):
-    return render(request,'ehealth_project/base.html', {})
+    return render(request,'ehealth_project/advanced.html', {})
 
 def basic_search(request):
     context_dict = {}

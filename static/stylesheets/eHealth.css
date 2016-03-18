@@ -21,6 +21,10 @@ eHealth styles
     background-origin: padding-box;
     background-size: auto auto;
 }
+.eh-score-result{
+    float:right;
+    font-size:12px;
+}
 body{
     padding-top: 72px;
 }
