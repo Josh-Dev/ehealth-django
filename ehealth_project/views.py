@@ -6,6 +6,9 @@ from ehealth_project.medLine_search import run_queryMed
 from ehealth_project.healthFinder_search import run_queryHF
 from ehealth_project.bing_Search import run_query
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login
+
+
 import random
 
 def saved_pages(request):
@@ -175,3 +178,20 @@ def about(request):
 def how(request):
     context_dict = {}
     return render(request, 'ehealth_project/search.html',context_dict)
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/ehealth/')
+            else:
+                return HttpResponse("Your Ehealth account is disabled.")
+        else:
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+    else:
+        return render(request, 'ehealth_project/login.html', {})
