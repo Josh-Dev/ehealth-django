@@ -9,16 +9,18 @@
         <input type="submit" value="Go"/>
     </form>
 
-    <a href="{% url 'user_finder' %}">show all</a>
+    <a href="{% url 'user_finder' %}" id="show_all">show all</a>
 
-    <h3> Users: </h3>
-    {% if users %}
-        <ul>
-            {% for u in users %}
-                {% if not u.is_superuser %}
-                <li>
-                    {{ u.username }}
-                    <img href="{% static 'images/blank.jpg' %}" alt="Profile pic">
+    <h2> Users: </h2>
+    {% if user_profs %}
+        <ul class="grid-list">
+            {% for u in user_profs %}
+                {% if not u.user.is_superuser %}
+                <li class="grid-item">
+                    <div class="img-with-text">
+                        <a href="{% url 'user_profile' u %}"><img src="{{ u.pic }}" alt="Profile pic"></a>
+                        <p>Username: {{ u }} <br />Email: {{ u.user.email }} <br /> </p>
+                    </div>
                 </li>
                 {% endif %}
             {% endfor %}

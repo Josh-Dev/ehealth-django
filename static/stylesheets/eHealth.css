@@ -21,8 +21,15 @@ eHealth styles
     background-origin: padding-box;
     background-size: auto auto;
 }
-title{
-    position: 60px,60px
-    bottom: 36px;
-    top: 36px;
+body{
+    padding-top: 72px;
+}
+.grid-list {
+    margin: 0 auto;
+    text-align: left;
+}
+.grid-item {
+    padding: 72px;
+    display: inline-block;
+    vertical-align: top;
 }

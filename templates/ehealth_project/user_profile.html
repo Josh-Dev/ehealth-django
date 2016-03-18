@@ -1,0 +1,35 @@
+{% extends 'ehealth_project/base.html' %}
+{% block title %}User Profile - {{ user_prof }}{% endblock %}
+{% block body_block %}
+    <div class="img-with-text">
+        <img src="{{ user_prof.pic }}" >
+        <p>{{ user_prof }} <br/> {{ user_prof.email }}</p>
+    </div>
+
+    {% if users_public_folders %}
+        <div class="folder_dir">
+        <ul>
+           {% for upf in users_public_folders %}
+                <li><a href="{% url 'user_profile' user_prof upf %}">{{ upf }}</a></li>
+           {% endfor %}
+        </ul>
+        </div>
+        <div class="page_display">
+        {% if current_folder %}
+            <ul>
+            {% for p in current_pages %}
+                <li>
+                    <div class="page_in_list">
+                        <a href="{{ p.url }}">{{ p }}</a><br />
+                        <p>{{ p.summary }}</p><br />
+                        <p>{{ p.source }}, {{ p.readability_score }}, {{ p.objectivity_score }}, {{ p.sentimentality_score }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        </div>
+        {% else %}
+            <h3>No Folders to display</h3>
+    {% endif %}
+{% endblock %}
