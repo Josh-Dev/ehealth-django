@@ -8,7 +8,8 @@
 </div>
 <!--Main Search-->
 <div class="container eh-searchcontainer">
-    <form id="search_form" method="GET" action="{% url 'basic_search' %}">
+    <form id="search_form" method="post" action="{% url 'basic_search' %}">
+        {% csrf_token %}
         <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Use Our Search</h2>
         <div style="display:inline-block">
             <input type="text" name="searchTerms" id="searchTerms" class="form-control" placeholder="e.g. Diabetes, Chemotherapy, Help"/>
@@ -16,5 +17,23 @@
         </div>
         <p>If you need to be more specific, try our <a href="{% url 'advanced_search' %}">Advanced Search</a>...</p>
     </form>
+    <div class="panel">
+                {% if result_list %}
+                    <div class="panel-heading">
+                    <h3 class="panel-title">Results</h3>
+                    <!-- Display search results in an ordered list -->
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {% for result in result_list %}
+                                <div class="list-group-item">
+                                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result.title }}</a></h4>
+                                    <p class="list-group-item-text">{{ result.summary }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+    </div>
 </div>
 {% endblock %}
