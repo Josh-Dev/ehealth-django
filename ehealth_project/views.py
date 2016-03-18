@@ -6,6 +6,9 @@ from ehealth_project.medLine_search import run_queryMed
 from ehealth_project.healthFinder_search import run_queryHF
 from ehealth_project.bing_Search import run_query
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login
+
+
 import random
 
 def saved_pages(request):
@@ -179,6 +182,8 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+
         if user:
             if user.is_active:
                 login(request, user)
