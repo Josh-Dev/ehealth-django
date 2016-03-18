@@ -14,25 +14,25 @@ def populate():
 
 	test_cat_1 = add_cat(generic_user_profile,"TEST_CAT_1",True)
 	
-	add_page(folder=test_cat_1,title="page_1",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=57,objectivity_score=45,sentimentality_score=65)
+	add_page(folder=test_cat_1,title="page_1",url="https://www.google.com",source="Bing",summary="blahblahblah",readability_score=57,objectivity_score=45,sentimentality_score=65)
 	
-	add_page(folder=test_cat_1,title="page_2",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=14,objectivity_score=24,sentimentality_score=13)
+	add_page(folder=test_cat_1,title="page_2",url="https://www.google.com",source="Bing",summary="blahblahblah",readability_score=14,objectivity_score=24,sentimentality_score=13)
 	
-	add_page(folder=test_cat_1,title="page_3",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=15,objectivity_score=54,sentimentality_score=87)
+	add_page(folder=test_cat_1,title="page_3",url="https://www.google.com",source="Bing",summary="blahblahblah",readability_score=15,objectivity_score=54,sentimentality_score=87)
 	
 	test_cat_2 = add_cat(generic_user_profile,"TEST_CAT_2",False)
 	
-	add_page(folder=test_cat_2,title="page_1",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=43,objectivity_score=54,sentimentality_score=76)
+	add_page(folder=test_cat_2,title="page_1",url="https://www.google.com",source="Bing",summary="blahblahblah",readability_score=43,objectivity_score=54,sentimentality_score=76)
 	
-	add_page(folder=test_cat_2,title="page_2",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=54,objectivity_score=23,sentimentality_score=42)
+	add_page(folder=test_cat_2,title="page_2",url="https://www.google.com",source="Bing",summary="blahblahblah",readability_score=54,objectivity_score=23,sentimentality_score=42)
 	
-	add_page(folder=test_cat_2,title="page_3",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=42,objectivity_score=54,sentimentality_score=24)
+	add_page(folder=test_cat_2,title="page_3",url="https://www.google.com",source="Bing",summary="blahblahblah",readability_score=42,objectivity_score=54,sentimentality_score=24)
 	
 	test_cat_3 = add_cat(generic_user_profile,"TEST_CAT_3",False)
 	
-	add_page(folder=test_cat_2,title="page_1",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=34,objectivity_score=25,sentimentality_score=78)
+	add_page(folder=test_cat_3,title="page_1",url="https://www.google.com",source="Bing",summary="blahblahblah",readability_score=34,objectivity_score=25,sentimentality_score=78)
 	
-	add_page(folder=test_cat_2,title="page_2",url="www.google.com",source="bing.com",summary="blahblahblah",readability_score=87,objectivity_score=78,sentimentality_score=98)
+	add_page(folder=test_cat_3,title="page_2",url="https://www.google.com",source="Bing",summary="blahblahblah",readability_score=87,objectivity_score=78,sentimentality_score=98)
 	
     # Print out what we have added to the user.
 	for f in Folder.objects.all():

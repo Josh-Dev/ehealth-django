@@ -15,22 +15,24 @@
         </ul>
         </div>
         <div class="page_display">
-        {% if current_folder %}
-            <h2>Pages: </h2>
-            <ul>
-            {% for p in current_pages %}
-                <li>
-                    <div class="page_in_list">
-                        <a href="{{ p.url }}">{{ p }}</a><br />
-                        <p>{{ p.summary }}</p><br />
-                        <p>{{ p.source }}, {{ p.readability_score }}, {{ p.objectivity_score }}, {{ p.sentimentality_score }}</p>
+            {% if current_folder %}
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Results</h3>
+                        <!-- Display search results in an ordered list -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                {% for p in current_pages %}
+                                <div class="list-group-item">
+                                    <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a><a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: 100<br/>Subjectivity: 100<br/>Sentimentality: 100" class="label label-default eh-score-result">Score: 100</a></h4>
+                                    <p class="list-group-item-text">{{ p.summary }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
-                </li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-        </div>
-        {% else %}
-            <h3>No Folders to display</h3>
+                </div>
+            {% else %}
+                <h3>No Folders to display</h3>
     {% endif %}
 {% endblock %}
