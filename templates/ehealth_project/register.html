@@ -1,32 +1,29 @@
-<html>
-	<head>
-		<title>Register</title>
-		
-	</head>
-	<body>
-		<input type="button" name="login" href="/login/" value="Login"/>
-		<input type="button" name="Register" href="/Register/"value="Register"/>
-		<h1>Ehealth</h1>
-		{%if registered%}
-		<strong>Thank you for registering</strong>
-		<a href="/ehealth/">Return</a><br />
-		{%else%}
-		<strong>Create Your Account</strong><br />
-		<form id="user_form" method="post" action="/ehealth/register/"
-                enctype="multipart/form-data">
-			{% csrf_token %}
-            {{ user_form.as_p }}
-			<input type="submit" name="submit" value="Submit" />
-        </form>
-		<strong>Account benefits</strong>
-		<strong>Create pages</strong>
-		<strong>& more!</strong>
-        {% endif %}
+{% extends 'ehealth_project/base.html' %}
+{% load staticfiles %}
+{% block title %} Create Your Account {% endblock %}
+{% block body_block %}
+
+	<button type="button" onClick="window.location='/login/">Login</button> 
+	<button type="button" onClick="window.location='/register/">Register</button> 
+	<h1>Ehealth</h1>
+	{%if registered%}
+	<strong>Thank you for registering</strong>
+	<a href="/ehealth/">Return</a><br />
+	{%else%}
+	<strong>Create Your Account</strong><br />
+	<form id="user_form" method="post" action="/ehealth/register/" enctype="multipart/form-data">
+	{% csrf_token %}
+    {{ user_form.as_p }}
+	<input type="submit" name="submit" value="Submit" />
+    </form>
+	<strong>Account benefits</strong>
+	<strong>Create pages</strong>
+	<strong>& more!</strong>
+    {% endif %}
 			
+{% endblock %}		
 		
-			
-	<body>
-<html>	
+
 	
 
 
