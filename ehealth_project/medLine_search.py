@@ -1,6 +1,7 @@
 __author__ = 'Ruxandra'
 
 from bs4 import BeautifulSoup
+import xml.etree.ElementTree
 import urllib, urllib2
 
 
@@ -12,7 +13,7 @@ def run_queryMed(search_terms):
     # default is 10.
     #database used - healthTopics
     db = 'healthTopics'
-    retmax='10'
+    retmax='50'
 
     # Wrap quotes around our query terms as required by the Bing API.
     # The query we will then use is stored within variable query.
@@ -47,19 +48,22 @@ def run_queryMed(search_terms):
         urllib2.install_opener(opener)
 
         # Connect to the server and read the response generated.
-        response = urllib2.urlopen(search_url).read()
-
-        # Convert the string response to a BeautifulSoup object.
-        xml_response = BeautifulSoup(response)
+        request = urllib2.Request(search_url)
+        response = urllib2.urlopen(request)
+        # Convert the string response to a Python dictionary object.
+        xml_soup = xml.etree.ElementTree.parse(response)
+        root = xml_soup.getroot()
 
         # Loop through each page returned, populating out results list.
-        keys = {'url'}
-        for result in xml_response.find_all("document"):
-            dict = ({key:value for key, value in result.attrs.iteritems() if key in keys})
-            results.append({
-            'title': BeautifulSoup(result.contents[1].text).text,
-            'link': dict['url'],
-            'summary': BeautifulSoup(result.contents[len(result.contents)-2].text).text})
+        for result in root.findall("list"):
+            for data in result.findall("document"):
+                url= data.attrib['url']
+                title= BeautifulSoup(data.findall("content")[0].text).text
+                summary = BeautifulSoup(data.findall("content")[len(data.findall("content"))-1].text).text
+                results.append({
+                'title': title,
+                'link': url,
+                'summary': summary})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:
