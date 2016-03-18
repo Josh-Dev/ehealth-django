@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <!--Header-->
             <div class="navbar-header"> 
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#eHealthNavbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-br"></span>
                     <span class="icon-br"></span>
@@ -21,7 +21,7 @@
             </div>
             <!--End Header-->
             <!--Nav-->
-            <div class="navbar-collapse collapse">
+            <div id="#eHealthNavbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'saved_pages' %}">My Pages</a></li>
@@ -33,7 +33,7 @@
                     <li><a href="{% url 'auth_logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
                 {% else %}
-                <ul>
+                <ul class="nav navbar-nav navbar-right">
                     <li><a href="{% url 'registration_register' %}">Register</a></li>
                     <li><a href="{% url 'auth_login' %}">Login</a></li>
                 </ul>
