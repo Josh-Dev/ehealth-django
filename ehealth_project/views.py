@@ -5,7 +5,11 @@ from ehealth_project.forms import UserForm,UserProfileForm,UserFinderForm
 from ehealth_project.medLine_search import run_queryMed
 from ehealth_project.healthFinder_search import run_queryHF
 from ehealth_project.bing_Search import run_query
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login, logout
 import random
+
+
 
 def saved_pages(request):
     return render(request,'ehealth_project/base.html', {})
@@ -175,3 +179,9 @@ def about(request):
 def how(request):
     context_dict = {}
     return render(request, 'ehealth_project/search.html',context_dict)
+from django.contrib.auth import logout
+
+
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/rango/')
