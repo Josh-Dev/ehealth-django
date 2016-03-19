@@ -2,6 +2,9 @@ __author__ = 'Ruxandra'
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree
 import urllib, urllib2
+from textblob import TextBlob
+from textstat.textstat import textstat
+import requests
 
 # Add your BING_API_KEY
 
@@ -59,19 +62,35 @@ def run_queryHF(search_terms):
                 for data1 in data.findall("Sections"):
                     for data2 in data1.findall("Section"):
                         summary = BeautifulSoup(data2.find("Content").text).text
+
+                r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+                myfile = BeautifulSoup(r.text,"html.parser").text
+                blob = TextBlob(myfile)
+
                 results.append({
                 'title': title,
                 'link': url,
-                'summary': summary[0:280]+"..."})
+                'summary': summary[0:280]+"...",
+                'readability':textstat.flesch_reading_ease(myfile),
+                'polarity': blob.sentiment.polarity,
+                'subjectivity': blob.sentiment.subjectivity})
         for result in root.findall("Tools"):
             for data in result.findall("Tool"):
                 title = BeautifulSoup(data.find("Title").text).text
                 url = data.find("AccessibleVersion").text
                 summary = BeautifulSoup(data.find("Content").text).text
+
+                r = requests.get(url)     #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+                myfile = BeautifulSoup(r.text,"html.parser").text
+                blob = TextBlob(myfile)
+
                 results.append({
                 'title': title,
                 'link': url,
-                'summary': summary[0:280]+"..."})
+                'summary': summary[0:280]+"...",
+                'readability':textstat.flesch_reading_ease(myfile),
+                'polarity': blob.sentiment.polarity,
+                'subjectivity': blob.sentiment.subjectivity})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:

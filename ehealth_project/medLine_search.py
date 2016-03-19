@@ -3,6 +3,9 @@ __author__ = 'Ruxandra'
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree
 import urllib, urllib2
+from textblob import TextBlob
+from textstat.textstat import textstat
+import requests
 
 
 def run_queryMed(search_terms):
@@ -60,10 +63,18 @@ def run_queryMed(search_terms):
                 url= data.attrib['url']
                 title= BeautifulSoup(data.findall("content")[0].text).text
                 summary = BeautifulSoup(data.findall("content")[len(data.findall("content"))-1].text).text
+
+                r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+                myfile = BeautifulSoup(r.text,"html.parser").text
+                blob = TextBlob(myfile)
+
                 results.append({
                 'title': title,
                 'link': url,
-                'summary': summary})
+                'summary': summary,
+                'readability':textstat.flesch_reading_ease(myfile),
+                'polarity': blob.sentiment.polarity,
+                'subjectivity': blob.sentiment.subjectivity})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:

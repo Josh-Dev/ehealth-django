@@ -1,6 +1,10 @@
 __author__ = 'Ruxandra'
 import json
 import urllib, urllib2
+from bs4 import BeautifulSoup
+from textblob import TextBlob
+from textstat.textstat import textstat
+import requests
 
 # Add your BING_API_KEY
 
@@ -58,10 +62,19 @@ def run_query(search_terms):
 
         # Loop through each page returned, populating out results list.
         for result in json_response['d']['results']:
+            url = result['Url']
+
+            r = requests.get(url)     #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+            myfile = BeautifulSoup(r.text,"html.parser").text
+            blob = TextBlob(myfile)
+
             results.append({
             'title': result['Title'],
             'link': result['Url'],
-            'summary': result['Description']})
+            'summary': result['Description'],
+            'readability':textstat.flesch_reading_ease(myfile),
+            'polarity': blob.sentiment.polarity,
+            'subjectivity': blob.sentiment.subjectivity})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:
