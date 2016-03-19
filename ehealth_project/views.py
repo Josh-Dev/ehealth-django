@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from ehealth_project.models import UserProfile
+from ehealth_project.models import UserProfile,Folder,Page
 from ehealth_project.forms import UserForm,UserProfileForm,UserFinderForm
 from ehealth_project.medLine_search import run_queryMed
 from ehealth_project.healthFinder_search import run_queryHF

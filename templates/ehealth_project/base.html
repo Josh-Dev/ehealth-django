@@ -24,7 +24,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'saved_pages' %}">My Pages</a></li>
+                    <li><a href="{% url 'user_profile' user.username %}">My Pages</a></li>
                     {% endif %}
                 </ul>
                 {% if user.is_authenticated %}
