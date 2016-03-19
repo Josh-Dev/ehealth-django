@@ -57,11 +57,11 @@ def run_queryHF(search_terms):
         # Loop through each page returned, populating out results list.
         for result in root.findall("Topics"):
             for data in result.findall("Topic"):
-                title = BeautifulSoup(data.find("Title").text).text
+                title = BeautifulSoup(data.find("Title").text,"html.parser").text
                 url = data.find("AccessibleVersion").text
                 for data1 in data.findall("Sections"):
                     for data2 in data1.findall("Section"):
-                        summary = BeautifulSoup(data2.find("Content").text).text
+                        summary = BeautifulSoup(data2.find("Content").text,"html.parser").text
 
                 r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
                 myfile = BeautifulSoup(r.text,"html.parser").text
@@ -76,9 +76,9 @@ def run_queryHF(search_terms):
                 'subjectivity': blob.sentiment.subjectivity})
         for result in root.findall("Tools"):
             for data in result.findall("Tool"):
-                title = BeautifulSoup(data.find("Title").text).text
+                title = BeautifulSoup(data.find("Title").text,"html.parser").text
                 url = data.find("AccessibleVersion").text
-                summary = BeautifulSoup(data.find("Content").text).text
+                summary = BeautifulSoup(data.find("Content").text,"html.parser").text
 
                 r = requests.get(url)     #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
                 myfile = BeautifulSoup(r.text,"html.parser").text

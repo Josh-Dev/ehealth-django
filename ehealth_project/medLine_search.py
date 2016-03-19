@@ -13,7 +13,7 @@ def run_queryMed(search_terms):
     root_url = 'https://wsearch.nlm.nih.gov/ws/query'
 
     # Specify how many results we wish to be returned in the xml document.
-    # default is 10.
+    # default is 10 - for testing purposes I changed it to 50, but that can be tweaked.
     #database used - healthTopics
     db = 'healthTopics'
     retmax='50'
@@ -61,8 +61,8 @@ def run_queryMed(search_terms):
         for result in root.findall("list"):
             for data in result.findall("document"):
                 url= data.attrib['url']
-                title= BeautifulSoup(data.findall("content")[0].text).text
-                summary = BeautifulSoup(data.findall("content")[len(data.findall("content"))-1].text).text
+                title= BeautifulSoup(data.findall("content")[0].text,"html.parser").text
+                summary = BeautifulSoup(data.findall("content")[len(data.findall("content"))-1].text,"html.parser").text
 
                 r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
                 myfile = BeautifulSoup(r.text,"html.parser").text
