@@ -16,7 +16,7 @@ def run_queryMed(search_terms):
     # default is 10 - for testing purposes I changed it to 50, but that can be tweaked.
     #database used - healthTopics
     db = 'healthTopics'
-    retmax='50'
+    retmax='30'
 
     # Wrap quotes around our query terms as required by the Bing API.
     # The query we will then use is stored within variable query.
@@ -72,9 +72,9 @@ def run_queryMed(search_terms):
                 'title': title,
                 'link': url,
                 'summary': summary,
-                'readability':textstat.flesch_reading_ease(myfile),
-                'polarity': blob.sentiment.polarity,
-                'subjectivity': blob.sentiment.subjectivity})
+                'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+                'polarity':"{:.2f}".format( blob.sentiment.polarity),
+                'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:

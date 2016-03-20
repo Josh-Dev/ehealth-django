@@ -71,9 +71,9 @@ def run_queryHF(search_terms):
                 'title': title,
                 'link': url,
                 'summary': summary[0:280]+"...",
-                'readability':textstat.flesch_reading_ease(myfile),
-                'polarity': blob.sentiment.polarity,
-                'subjectivity': blob.sentiment.subjectivity})
+                'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+                'polarity':"{:.2f}".format( blob.sentiment.polarity),
+                'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
         for result in root.findall("Tools"):
             for data in result.findall("Tool"):
                 title = BeautifulSoup(data.find("Title").text,"html.parser").text
@@ -88,9 +88,9 @@ def run_queryHF(search_terms):
                 'title': title,
                 'link': url,
                 'summary': summary[0:280]+"...",
-                'readability':textstat.flesch_reading_ease(myfile),
-                'polarity': blob.sentiment.polarity,
-                'subjectivity': blob.sentiment.subjectivity})
+                'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+                'polarity':"{:.2f}".format( blob.sentiment.polarity),
+                'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:

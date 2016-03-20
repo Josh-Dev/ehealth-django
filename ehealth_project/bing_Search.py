@@ -19,7 +19,7 @@ def run_query(search_terms):
     # Specify how many results we wish to be returned per page.
     # Offset specifies where in the results list to start from.
     # With results_per_page = 10 and offset = 11, this would start from page 2.
-    results_per_page = 50
+    results_per_page = 30
     offset = 0
 
     # Wrap quotes around our query terms as required by the Bing API.
@@ -72,9 +72,9 @@ def run_query(search_terms):
             'title': result['Title'],
             'link': result['Url'],
             'summary': result['Description'],
-            'readability':textstat.flesch_reading_ease(myfile),
-            'polarity': blob.sentiment.polarity,
-            'subjectivity': blob.sentiment.subjectivity})
+            'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+            'polarity':"{:.2f}".format( blob.sentiment.polarity),
+            'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:
