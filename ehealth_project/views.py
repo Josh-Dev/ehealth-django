@@ -21,6 +21,12 @@ def user_profile(request,username,current_folder=None):
     # Get the user with the specified username
     user = User.objects.all().get(username=username)
     user_prof = UserProfile.objects.all().get(user=user)
+    #user = authenticate(username=user.username, password=user.password)
+    #login(request,user)
+    current_users_profile = False
+    print user==request.user
+    if user==request.user:
+        current_users_profile = True
 
     current_pages=None
 
@@ -31,7 +37,7 @@ def user_profile(request,username,current_folder=None):
         current_folder = Folder.objects.all().get(name=current_folder)
         current_pages = Page.objects.all().filter(folder=current_folder)
 
-    context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder}
+    context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
 
     return render(request,'ehealth_project/user_profile.html', context_dict)
 
