@@ -21,6 +21,13 @@ def user_profile(request,username,current_folder=None):
     # Get the user with the specified username
     user = User.objects.all().get(username=username)
     user_prof = UserProfile.objects.all().get(user=user)
+
+    # If the user submitted a new folder name then a new folder will be made if it doesnt exist
+    if request.method == 'POST':
+        if u'new_folder_name' in request.POST:
+            folder_name = request.POST.get('new_folder_name')
+            new_folder = Folder.objects.get_or_create(user=user_prof,name=folder_name)
+
     #user = authenticate(username=user.username, password=user.password)
     #login(request,user)
     current_users_profile = False

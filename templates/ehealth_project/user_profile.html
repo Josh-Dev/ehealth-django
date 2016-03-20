@@ -6,24 +6,35 @@
         <p>{{ user_prof }} <br/> {{ user_prof.email }}</p>
     </div>
 
+    <form method="post" id="new_folder_form" action="{% url 'user_profile' user_prof %}">
+        {% csrf_token %}
+        <label for="folder_name_txt"> New Folder Name: </label>
+        <input type="text" name="new_folder_name" id="folder_name_txt" placeholder="Folder Name">
+        <input type="submit" value="New Folder" name="new_folder_btn">
+    </form>
+
+    {% if current_users_profile %}
+    {% endif %}
+
     {% if users_public_folders %}
         <div class="folder_dir">
         <ul>
            {% for upf in users_public_folders %}
                 <li><a href="{% url 'user_profile' user_prof upf %}">{{ upf }}</a>
                 {% if current_users_profile %}
-                    <p>privacy button</p>
+                    <!-- Need the privacy button here -->
                 {% endif %}</li>
            {% endfor %}
         </ul>
         </div>
         <div class="page_display">
             {% if current_folder %}
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Results</h3>
-                        <!-- Display search results in an ordered list -->
-                        <div class="panel-body">
-                            <div class="list-group">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ current_folder }} > Pages</h3>
+                    <!-- Display folder pages in an ordered list -->
+                    <div class="panel-body">
+                        <div class="list-group">
+                            {% if pages %}
                                 {% for p in current_pages %}
                                 <div class="list-group-item">
                                     <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
@@ -33,12 +44,15 @@
                                     <p class="list-group-item-text">{{ p.summary }}</p>
                                 </div>
                                 {% endfor %}
-                            </div>
+                            {% else %}
+                                <h2> No pages...</h2>
+                            {% endif %}
                         </div>
-                        {% endif %}
                     </div>
                 </div>
-            {% else %}
-                <h3>No Folders to display</h3>
+                {% else %}
+                    <h3>No Folders to display</h3>
+        </div>
+        {% endif %}
     {% endif %}
 {% endblock %}
