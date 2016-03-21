@@ -59,21 +59,24 @@ def user_profile_form(request):
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
         if profile_form.is_valid():
+            user = user_form.save()
             profile = profile_form.save(commit=False)
+
             profile.user = user
 
          
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
+            if 'pic' in request.FILES:
+                profile.pic = request.FILES['pic']
 
            
             profile.save()
         else:
             print user_form.errors, profile_form.errors
+    user_form = UserForm()
     profile_form = UserProfileForm()
     return render(request,
             'ehealth_project/user_profile_form.html',
-            {'profile_form': profile_form, 'registered': registered} )
+            {'user_form':user_form,'profile_form': profile_form, 'registered': registered} )
 def user_finder(request):
     qd = request.GET #gets a query dictionary
     users = User.objects.all().order_by('username')
