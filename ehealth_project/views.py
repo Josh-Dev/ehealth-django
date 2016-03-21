@@ -9,6 +9,10 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import random
+from bs4 import BeautifulSoup
+import requests
+from textblob import TextBlob
+from textstat.textstat import textstat
 
 
 
@@ -49,7 +53,27 @@ def user_profile(request,username,current_folder=None):
     context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
 
     return render(request,'ehealth_project/user_profile.html', context_dict)
+def user_profile_form(request):
+    registered = True
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+        if profile_form.is_valid():
+            profile = profile_form.save(commit=False)
+            profile.user = user
 
+         
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+           
+            profile.save()
+        else:
+            print user_form.errors, profile_form.errors
+    profile_form = UserProfileForm()
+    return render(request,
+            'ehealth_project/user_profile_form.html',
+            {'profile_form': profile_form, 'registered': registered} )
 def user_finder(request):
     qd = request.GET #gets a query dictionary
     users = User.objects.all().order_by('username')
@@ -107,37 +131,36 @@ def searchMedLine(request):
             result_list = run_queryMed(query)
 
     #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
-    
+
 def getUserFolders(user_prof):
     folder_list = []
-    
+
     if Folder.objects.all().filter(user= user_prof) != []:
         folder_list = Folder.objects.all().filter(user=user_prof)
-        
+
     return folder_list;
 
 def searchAll(request):
     result_list = []
     folder_list = []
-    
+
     #Execute Search
     if request.method == 'GET':
         query = request.GET.get('searchTerms');
         if query:
             results_Bing = run_query(query)
-            #results_HF = run_queryHF(query)
-            #results_Med = run_queryMed(query)
+            results_HF = run_queryHF(query)
+            results_Med = run_queryMed(query)
             result_list.extend(results_Bing)
-            #result_list.extend(results_HF)
-            #result_list.extend(results_Med)
+            result_list.extend(results_HF)
+            result_list.extend(results_Med)
 
-    #random.shuffle(result_list,random.random)
-    
+    random.shuffle(result_list,random.random)
     if request.user.is_authenticated():
         user = request.user
         #Get user's folders
         folder_list = getUserFolders(UserProfile.objects.all().get(user=user))
-    
+
     return render(request,'ehealth_project/results.html',{'result_list':result_list,'folders':folder_list})
 
 def register(request):
@@ -149,30 +172,30 @@ def register(request):
         user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
 
-        
+
         if user_form.is_valid() and profile_form.is_valid():
-            
+
             user = user_form.save()
 
-            
+
             user.set_password(user.password)
             user.save()
 
-            
+
             profile = profile_form.save(commit=False)
             profile.user = user
 
-         
+
             if 'picture' in request.FILES:
                 profile.picture = request.FILES['picture']
 
-           
+
             profile.save()
 
-           
+
             registered = True
 
-        
+
         else:
             print user_form.errors, profile_form.errors
 
@@ -181,7 +204,7 @@ def register(request):
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-   
+
     return render(request,
             'ehealth_project/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
@@ -209,34 +232,34 @@ def user_logout(request):
     return HttpResponseRedirect('/ehealth/')
 def user_login(request):
 
-    
+
     if request.method == 'POST':
-        
+
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        
+
         user = authenticate(username=username, password=password)
 
         if user:
-            
+
             if user.is_active:
-               
+
                 login(request, user)
                 return HttpResponseRedirect('/ehealth/')
             else:
-               
+
                 return HttpResponse("Your ehealth account is disabled.")
         else:
-            
+
             print "Invalid login details: {0}, {1}".format(username, password)
             return HttpResponse("Invalid login details supplied.")
 
     else:
-       
+
         return render(request, 'ehealth_project/login.html', {})
-        
-   
+
+
 #Adds page to folder
 @login_required
 def save_page(request):
@@ -245,13 +268,17 @@ def save_page(request):
     desc = request.GET.get('desc')
     title = request.GET.get('title')
     folder_name = request.GET.get('folder_name')
-    
+
     #Score the page using APIs
-    #TO DO: (Roxandra apis)
-    scr_polarity = 0
-    scr_subjectivity = 0
-    scr_readability = 0
-    
+    #TO DO: (Ruxandra apis)
+
+    r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+    myfile = BeautifulSoup(r.text,"html.parser").text
+    blob = TextBlob(myfile)
+    scr_polarity = "{:.2f}".format( blob.sentiment.polarity)
+    scr_subjectivity = "{:.2f}".format( blob.sentiment.subjectivity)
+    scr_readability ="{:.2f}".format(textstat.flesch_reading_ease(myfile))
+
     #Save page
     user_profile = UserProfile.objects.all().get(user=request.user)
     folder = Folder.objects.all().get(name=folder_name,user=user_profile)
@@ -261,10 +288,10 @@ def save_page(request):
     objectivity_score=scr_subjectivity,
     sentimentality_score=scr_polarity,
     folder=folder)
-    
+
     #Return success/fail
     return HttpResponse('Was a success')
-    
+
 @login_required
 def delete_folder(request, id=0, current_folder=None):
     #folder_id = request.GET.get('folder_id')
@@ -281,5 +308,4 @@ def delete_folder(request, id=0, current_folder=None):
     folder.delete()
     
     return HttpResponseRedirect('/ehealth/user_profile/' + up.user.username + '/' + folder_curr)
-    
     
