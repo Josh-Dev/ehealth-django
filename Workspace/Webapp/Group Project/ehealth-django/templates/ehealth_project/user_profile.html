@@ -1,54 +1,117 @@
-{% extends 'ehealth_project/base.html' %}
-{% block title %}User Profile - {{ user_prof }}{% endblock %}
-{% block body_block %}
-    <div class="img-with-text">
-        <img src="{{ user_prof.pic }}" >
-        <p>{{ user_prof }} <br/> {{ user_prof.email }}</p>
-    </div>
-
-    <form method="post" id="new_folder_form" action="{% url 'user_profile' user_prof %}">
-        {% csrf_token %}
-        <label for="folder_name_txt"> New Folder Name: </label>
-        <input type="text" name="new_folder_name" id="folder_name_txt" placeholder="Folder Name">
-        <input type="submit" value="New Folder" name="new_folder_btn">
-    </form>
-
-    {% if current_users_profile %}
-    {% endif %}
-
-    {% if users_public_folders %}
-        <div class="folder_dir">
-        <ul>
-           {% for upf in users_public_folders %}
-                <li><a href="{% url 'user_profile' user_prof %}{{ upf.slug }}">{{ upf }}</a>
-                {% if current_users_profile %}
-                    <!-- Need the privacy button here -->
-                {% endif %}</li>
-           {% endfor %}
-        </ul>
+{% extends 'ehealth_project/base.html' %} {% block title %}User Profile - {{ user_prof }}{% endblock %} {% load staticfiles
+%} {% block body_block %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <div class="img-with-text">
+                <img class="img-circle" src="{{ user_prof.pic }}">
+            </div>
+            <!--//img-->
         </div>
-        <div class="page_display">
+        <!--//col-->
+        <div class="col-xs-12 col-sm-8">
+            <br/>
+            <h3>{{user_prof}}</h3>
+            <p>{{ user_prof.email }}</p>
+
+        </div>
+        <!--//col-->
+    </div>
+    <br/>
+    <!--//row-->
+    <div class="row eh-row-divide">
+        <!--Create new-->
+        <div class="col-xs-12">
+            <h4><a href="#" data-toggle="collapse" data-target="#userFolders">My Categories</a></h4>
+            <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modalNewFolder"><i class="fa fa-folder"></i> New
+            </button>
+        </div>
+        <!--//col-->
+        <!--Folders-->
+        {% if users_public_folders %}
+        <div class="col-xs-12">
+            <div id="userFolders" class="collapse in">
+                <br/>
+                <table class="table table-striped">
+
+                    <tbody>
+                    </tbody>
+                    {% for upf in users_public_folders %}
+                    <tr>
+                        <td><a href="{% url 'user_profile' user_prof %}{{ upf.slug }}">{{ upf }}</a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <!--//table-->
+            </div>
+            <!--//collapse-->
+        </div>
+        <!--//col-->
+        <div class="col-xs-12">
             {% if current_folder %}
-                <div class="panel-heading">
-                    <h3 class="panel-title">Results</h3>
-                    <!-- Display saved pages in an ordered list -->
-                    <div class="panel-body">
-                        <div class="list-group">
-                            {% for p in current_pages %}
-                            <div class="list-group-item">
-                                <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
+            <div class="eh-row-divide">
+                <!-- Display saved pages in an ordered list -->
+                <h4>My Pages</h4>
+                <div class="list-group">
+                    {% for p in current_pages %}
+                    <div class="list-group-item">
+                        <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
                                     <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
                                     {% if current_users_profile %}<p>(Save Button)</p>{% endif %}
                                 </h4>
-                                <p class="list-group-item-text">{{ p.summary }}</p>
-                            </div>
-                            {% endfor %}
-                        </div>
+                        <p class="list-group-item-text">{{ p.summary }}</p>
                     </div>
-                    {% endif %}
+                    {% endfor %}
                 </div>
             </div>
+            {% else %}
+            <div class="col-xs-12">
+                <h4>There are no pages to display.</h4>
+            </div>
+            {% endif %}
+        </div>
+        <!--//row-->
+        <!--//row-->
         {% else %}
-            <h3>No Folders to display</h3>
-    {% endif %}
-{% endblock %}
+        <div class="col-xs-12">
+            <h4>There are no folders to display.</h4>
+        </div>
+        {% endif %}
+
+
+    </div>
+    <!--//container-->
+
+    <!--Modal-->
+    <div id="modalNewFolder" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4>Create New Folder</h4>
+                </div>
+                <!--//modal header-->
+                <div class="modal-body">
+                    <form method="post" id="new_folder_form" action="{% url 'user_profile' user_prof %}">
+                        {% csrf_token %}
+                        <div class="form-group eh-form-group">
+                            <label for="folder_name_txt"> Create New Folder: </label>
+                            <input type="text" name="new_folder_name" class="form-control" id="folder_name_txt" placeholder="Folder Name">
+
+                        </div>
+                        <!--//Form group-->
+                        <div class="text-right">
+                            <input type="submit" class="btn btn-success" value="Create" name="new_folder_btn">
+                        </div>
+                    </form>
+                </div>
+                <!--modal body-->
+            </div>
+            <!--//modal content-->
+        </div>
+        <!--//modal dialog-->
+    </div>
+    <!--//modal-->
+
+
+    {% endblock %}

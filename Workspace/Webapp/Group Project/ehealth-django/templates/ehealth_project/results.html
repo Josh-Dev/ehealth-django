@@ -83,13 +83,14 @@
             <div class="modal-body">
                 {% if folders %}
                 <p>Please select a category</p>
-                <select name="fol_name" id="fol_name" class="form control">
+                <select name="fol_name" id="fol_name" class="form-control">
 
                     {% for fol in folders %}
                     <option value="{{ fol.name}}">{{ fol.name}}</option>
                     {% endfor %}
 
                 </select>
+                <br/>
                 {% else %}
                 <p>There are no available folders</p>
                 {% endif %}
