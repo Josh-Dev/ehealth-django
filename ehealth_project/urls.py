@@ -14,5 +14,5 @@ urlpatterns = patterns('',
     url(r'^user_profile/(?P<username>[\w\-]+)/(?P<current_folder>[\w\-]+)/$',views.user_profile, name='user_profile'),
     url(r'^advanced/$',views.advanced_search,name='advanced_search'),
     url(r'^saved_pages/$',views.saved_pages,name='saved_pages'),
-    url(r'^manage_account/$',views.manage_account,name='manage_account')
-)
+    url(r'^manage_account/$',views.manage_account,name='manage_account'),
+    url(r'^accounts/',include('registration.backends.simple.urls'))

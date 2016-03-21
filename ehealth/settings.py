@@ -34,9 +34,15 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#Registration Settings
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/eHealth'
+LOGIN_URL = 'accounts/login/'
+
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +50,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration',
     'ehealth_project',
 )
 
