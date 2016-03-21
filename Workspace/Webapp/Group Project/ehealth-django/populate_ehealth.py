@@ -59,10 +59,12 @@ def populate():
 		print "-{0}".format(str(u))
 
 def add_user(username, password, email, dob, gender):
-	u = User.objects.get_or_create(username=username,password=password, email=email, is_superuser=False, is_staff=False)[0]
-	up = UserProfile.objects.get_or_create(user=u,dob=dob, gender=gender)[0]
-	up.save()
-	return up
+    u = User.objects.get_or_create(username=username, email=email, is_superuser=False, is_staff=False)[0]
+    u.set_password(password)
+    u.save()
+    up = UserProfile.objects.get_or_create(user=u,dob=dob, gender=gender)[0]
+    up.save()
+    return up
 
 def add_page(folder, title, url, source, summary, readability_score, objectivity_score,sentimentality_score):
 	p = Page.objects.get_or_create(title=title,folder=folder, url=url,source=source,summary=summary,readability_score=readability_score,objectivity_score=objectivity_score,sentimentality_score=sentimentality_score)[0]
