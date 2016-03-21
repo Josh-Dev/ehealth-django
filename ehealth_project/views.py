@@ -56,6 +56,7 @@ def user_profile(request,username,current_folder=None):
 def user_profile_form(request):
     registered = True
     if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
         profile_form = UserProfileForm(data=request.POST)
         if profile_form.is_valid():
             profile = profile_form.save(commit=False)
@@ -67,12 +68,12 @@ def user_profile_form(request):
 
            
             profile.save()
-    else:
+        else:
             print user_form.errors, profile_form.errors
     profile_form = UserProfileForm()
     return render(request,
             'ehealth_project/user_profile_form.html',
-            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
+            {'profile_form': profile_form, 'registered': registered} )
 def user_finder(request):
     qd = request.GET #gets a query dictionary
     users = User.objects.all().order_by('username')
