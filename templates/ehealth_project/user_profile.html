@@ -57,7 +57,7 @@
                     <div class="list-group-item">
                         <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
                                     <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
-                                    {% if current_users_profile %}<p>(Save Button)</p>{% endif %}
+                                    {% if current_users_profile %}<p></p>{% endif %}
                                 </h4>
                         <p class="list-group-item-text">{{ p.summary }}</p>
                     </div>
