@@ -63,34 +63,36 @@ def run_queryHF(search_terms):
                     for data2 in data1.findall("Section"):
                         summary = BeautifulSoup(data2.find("Content").text,"html.parser").text
 
-                r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
-                myfile = BeautifulSoup(r.text,"html.parser").text
-                blob = TextBlob(myfile)
+                #r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+                #myfile = BeautifulSoup(r.text,"html.parser").text
+                #blob = TextBlob(myfile)
 
                 results.append({
                 'title': title,
                 'link': url,
                 'summary': summary[0:280]+"...",
-                'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
-                'polarity':"{:.2f}".format( blob.sentiment.polarity),
-                'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
+                'readability':0,#"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+                'polarity':0,#"{:.2f}".format( blob.sentiment.polarity),
+                'subjectivity':0#"{:.2f}".format( blob.sentiment.subjectivity)
+                 })
         for result in root.findall("Tools"):
             for data in result.findall("Tool"):
                 title = BeautifulSoup(data.find("Title").text,"html.parser").text
                 url = data.find("AccessibleVersion").text
                 summary = BeautifulSoup(data.find("Content").text,"html.parser").text
 
-                r = requests.get(url)     #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
-                myfile = BeautifulSoup(r.text,"html.parser").text
-                blob = TextBlob(myfile)
+                #r = requests.get(url)     #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+                #myfile = BeautifulSoup(r.text,"html.parser").text
+                #blob = TextBlob(myfile)
 
                 results.append({
                 'title': title,
                 'link': url,
                 'summary': summary[0:280]+"...",
-                'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
-                'polarity':"{:.2f}".format( blob.sentiment.polarity),
-                'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
+                'readability':0,#"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+                'polarity':0,#"{:.2f}".format( blob.sentiment.polarity),
+                'subjectivity':0#"{:.2f}".format( blob.sentiment.subjectivity)
+                 })
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:
