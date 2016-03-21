@@ -49,9 +49,9 @@ class Page(models.Model):
 	# short summary of the page contents
 	summary = models.TextField()
 	# scores used to determine how good the page is
-	readability_score = models.IntegerField(default=0)
-	objectivity_score = models.IntegerField(default=0)
-	sentimentality_score = models.IntegerField(default=0)
+	readability_score = models.FloatField(default=0)
+	objectivity_score = models.FloatField(default=0)
+	sentimentality_score = models.FloatField(default=0)
 	def __unicode__(self):
 		return self.title
 
