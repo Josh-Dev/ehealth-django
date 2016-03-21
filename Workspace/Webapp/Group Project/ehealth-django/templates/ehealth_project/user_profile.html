@@ -1,5 +1,4 @@
-{% extends 'ehealth_project/base.html' %} {% block title %}User Profile - {{ user_prof }}{% endblock %} {% load staticfiles
-%} {% block body_block %}
+{% extends 'ehealth_project/base.html' %} {% block title %}User Profile - {{ user_prof }}{% endblock %} {% load staticfiles%} {% block body_block %}
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-4">
@@ -57,7 +56,6 @@
                     <div class="list-group-item">
                         <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
                                     <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
-                                    {% if current_users_profile %}<p>(Save Button)</p>{% endif %}
                                 </h4>
                         <p class="list-group-item-text">{{ p.summary }}</p>
                     </div>
@@ -97,7 +95,6 @@
                         <div class="form-group eh-form-group">
                             <label for="folder_name_txt"> Create New Folder: </label>
                             <input type="text" name="new_folder_name" class="form-control" id="folder_name_txt" placeholder="Folder Name">
-
                         </div>
                         <!--//Form group-->
                         <div class="text-right">

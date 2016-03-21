@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('age',)
+        fields = ('dob',)
 
 class UserFinderForm(forms.ModelForm):
     username = forms.CharField(max_length=128, help_text="Please enter a username")

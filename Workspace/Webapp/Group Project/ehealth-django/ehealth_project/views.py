@@ -6,6 +6,7 @@ from ehealth_project.medLine_search import run_queryMed
 from ehealth_project.healthFinder_search import run_queryHF
 from ehealth_project.bing_Search import run_query
 from django.http import HttpResponseRedirect, HttpResponse
+from django.template.defaultfilters import slugify
 from django.contrib.auth import authenticate, login, logout
 import random
 
@@ -42,7 +43,7 @@ def user_profile(request,username,current_folder=None):
     users_public_folders = Folder.objects.all().filter(user=user_prof, privacy=False)
 
     if current_folder:
-        current_folder = Folder.objects.all().get(slug=current_folder)
+        current_folder = Folder.objects.all().get(name=current_folder,user=user_prof)
         current_pages = Page.objects.all().filter(folder=current_folder)
 
     context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
