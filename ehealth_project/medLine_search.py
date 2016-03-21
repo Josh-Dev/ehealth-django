@@ -1,7 +1,11 @@
 __author__ = 'Ruxandra'
 
 from bs4 import BeautifulSoup
+import xml.etree.ElementTree
 import urllib, urllib2
+from textblob import TextBlob
+from textstat.textstat import textstat
+import requests
 
 
 def run_queryMed(search_terms):
@@ -9,10 +13,10 @@ def run_queryMed(search_terms):
     root_url = 'https://wsearch.nlm.nih.gov/ws/query'
 
     # Specify how many results we wish to be returned in the xml document.
-    # default is 10.
+    # default is 10 - for testing purposes I changed it to 50, but that can be tweaked.
     #database used - healthTopics
     db = 'healthTopics'
-    retmax='10'
+    retmax='30'
 
     # Wrap quotes around our query terms as required by the Bing API.
     # The query we will then use is stored within variable query.
@@ -47,19 +51,30 @@ def run_queryMed(search_terms):
         urllib2.install_opener(opener)
 
         # Connect to the server and read the response generated.
-        response = urllib2.urlopen(search_url).read()
-
-        # Convert the string response to a BeautifulSoup object.
-        xml_response = BeautifulSoup(response)
+        request = urllib2.Request(search_url)
+        response = urllib2.urlopen(request)
+        # Convert the string response to a Python dictionary object.
+        xml_soup = xml.etree.ElementTree.parse(response)
+        root = xml_soup.getroot()
 
         # Loop through each page returned, populating out results list.
-        keys = {'url'}
-        for result in xml_response.find_all("document"):
-            dict = ({key:value for key, value in result.attrs.iteritems() if key in keys})
-            results.append({
-            'title': BeautifulSoup(result.contents[1].text).text,
-            'link': dict['url'],
-            'summary': BeautifulSoup(result.contents[len(result.contents)-2].text).text})
+        for result in root.findall("list"):
+            for data in result.findall("document"):
+                url= data.attrib['url']
+                title= BeautifulSoup(data.findall("content")[0].text,"html.parser").text
+                summary = BeautifulSoup(data.findall("content")[len(data.findall("content"))-1].text,"html.parser").text
+
+                r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+                myfile = BeautifulSoup(r.text,"html.parser").text
+                blob = TextBlob(myfile)
+
+                results.append({
+                'title': title,
+                'link': url,
+                'summary': summary,
+                'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+                'polarity':"{:.2f}".format( blob.sentiment.polarity),
+                'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:

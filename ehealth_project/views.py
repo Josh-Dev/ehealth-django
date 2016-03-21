@@ -6,7 +6,10 @@ from ehealth_project.medLine_search import run_queryMed
 from ehealth_project.healthFinder_search import run_queryHF
 from ehealth_project.bing_Search import run_query
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login, logout
 import random
+
+
 
 def saved_pages(request):
     return render(request,'ehealth_project/base.html', {})
@@ -15,29 +18,44 @@ def manage_account(request):
     return render(request,'ehealth_project/base.html', {})
 
 def user_profile(request,username,current_folder=None):
+    # Get the user with the specified username
     user = User.objects.all().get(username=username)
     user_prof = UserProfile.objects.all().get(user=user)
+
+    # If the user submitted a new folder name then a new folder will be made if it doesnt exist
+    if request.method == 'POST':
+        if u'new_folder_name' in request.POST:
+            folder_name = request.POST.get('new_folder_name')
+            new_folder = Folder.objects.get_or_create(user=user_prof,name=folder_name)
+
+    #user = authenticate(username=user.username, password=user.password)
+    #login(request,user)
+    current_users_profile = False
+    print user==request.user
+    if user==request.user:
+        current_users_profile = True
+
     current_pages=None
 
-    print current_folder
+    # gets all the public folders from the user, and if a current folder has been selected then the current_folder is set to
+    # the current_folder passed to the view.  Gets all the pages in the current_folder.
+    users_public_folders = Folder.objects.all().filter(user=user_prof, privacy=False)
 
-    users_public_folders = Folder.objects.filter(user=user_prof, privacy=False)
     if current_folder:
-        current_folder = Folder.objects.all().get(name=current_folder)
+        current_folder = Folder.objects.all().get(slug=current_folder)
         current_pages = Page.objects.all().filter(folder=current_folder)
 
-    print current_folder,current_pages
-
-    context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder}
+    context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
 
     return render(request,'ehealth_project/user_profile.html', context_dict)
 
-
 def user_finder(request):
-    qd = request.GET
+    qd = request.GET #gets a query dictionary
     users = User.objects.all().order_by('username')
     query_string = None
 
+    #if the user tried to search then get the query string and find a user with a username or email matching
+    #the query string
     if u'search_bar' in qd:
         query_string = str(qd[u'search_bar']).strip()
         if query_string.__contains__("@"):
@@ -74,7 +92,7 @@ def searchHealthFinder(request):
             # Run our Bing function to get the results list!
             result_list = run_queryHF(query)
 
-    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+    #return render(request, 'ehealth_project/results.html.html', {'result_list': result_list})
 
 def searchMedLine(request):
 
@@ -96,21 +114,21 @@ def searchAll(request):
         query = request.GET.get('searchTerms');
         if query:
             results_Bing = run_query(query)
-            #results_HF = run_queryHF(query)
-            #results_Med = run_queryMed(query)
+            results_HF = run_queryHF(query)
+            results_Med = run_queryMed(query)
             result_list.extend(results_Bing)
-            #result_list.extend(results_HF)
-            #result_list.extend(results_Med)
+            result_list.extend(results_HF)
+            result_list.extend(results_Med)
 
     if request.method == 'POST':
         query = request.POST['searchTerms'].strip()
         if query:
             results_Bing = run_query(query)
-            #results_HF = run_queryHF(query)
-            #results_Med = run_queryMed(query)
+            results_HF = run_queryHF(query)
+            results_Med = run_queryMed(query)
             result_list.extend(results_Bing)
-            #result_list.extend(results_HF)
-            #result_list.extend(results_Med)
+            result_list.extend(results_HF)
+            result_list.extend(results_Med)
     random.shuffle(result_list,random.random)
     return render(request,'ehealth_project/results.html',{'result_list':result_list})
 
@@ -175,3 +193,37 @@ def about(request):
 def how(request):
     context_dict = {}
     return render(request, 'ehealth_project/search.html',context_dict)
+from django.contrib.auth import logout
+
+
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/ehealth/')
+def user_login(request):
+
+    
+    if request.method == 'POST':
+        
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        
+        user = authenticate(username=username, password=password)
+
+        if user:
+            
+            if user.is_active:
+               
+                login(request, user)
+                return HttpResponseRedirect('/ehealth/')
+            else:
+               
+                return HttpResponse("Your ehealth account is disabled.")
+        else:
+            
+            print "Invalid login details: {0}, {1}".format(username, password)
+            return HttpResponse("Invalid login details supplied.")
+
+    else:
+       
+        return render(request, 'ehealth_project/login.html', {})

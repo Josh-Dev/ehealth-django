@@ -1,6 +1,10 @@
 __author__ = 'Ruxandra'
 from bs4 import BeautifulSoup
+import xml.etree.ElementTree
 import urllib, urllib2
+from textblob import TextBlob
+from textstat.textstat import textstat
+import requests
 
 # Add your BING_API_KEY
 
@@ -44,26 +48,49 @@ def run_queryHF(search_terms):
         urllib2.install_opener(opener)
 
         # Connect to the server and read the response generated.
-        response = urllib2.urlopen(search_url).read()
-
+        request = urllib2.Request(search_url)
+        response = urllib2.urlopen(request)
         # Convert the string response to a Python dictionary object.
-        xml_soup = BeautifulSoup(response,"xml")
+        xml_soup = xml.etree.ElementTree.parse(response)
+        root = xml_soup.getroot()
 
         # Loop through each page returned, populating out results list.
-        for result in xml_soup.find_all("Topic"):
-            cleantext = BeautifulSoup(result.Sections.Section.Description.text).text
-            cleantitle = BeautifulSoup(result.Title.text).text
-            results.append({
-            'title': cleantitle,
-            'link': result.AccessibleVersion.text,
-            'summary': cleantext})
-        for result in xml_soup.find_all("Tool"):
-            cleantext = BeautifulSoup(result.Content.text).text
-            cleantitle = BeautifulSoup(result.Title.text).text
-            results.append({
-            'title': cleantitle,
-            'link': result.AccessibleVersion.text,
-            'summary': cleantext[0:280]+"..."})
+        for result in root.findall("Topics"):
+            for data in result.findall("Topic"):
+                title = BeautifulSoup(data.find("Title").text,"html.parser").text
+                url = data.find("AccessibleVersion").text
+                for data1 in data.findall("Sections"):
+                    for data2 in data1.findall("Section"):
+                        summary = BeautifulSoup(data2.find("Content").text,"html.parser").text
+
+                r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+                myfile = BeautifulSoup(r.text,"html.parser").text
+                blob = TextBlob(myfile)
+
+                results.append({
+                'title': title,
+                'link': url,
+                'summary': summary[0:280]+"...",
+                'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+                'polarity':"{:.2f}".format( blob.sentiment.polarity),
+                'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
+        for result in root.findall("Tools"):
+            for data in result.findall("Tool"):
+                title = BeautifulSoup(data.find("Title").text,"html.parser").text
+                url = data.find("AccessibleVersion").text
+                summary = BeautifulSoup(data.find("Content").text,"html.parser").text
+
+                r = requests.get(url)     #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
+                myfile = BeautifulSoup(r.text,"html.parser").text
+                blob = TextBlob(myfile)
+
+                results.append({
+                'title': title,
+                'link': url,
+                'summary': summary[0:280]+"...",
+                'readability':"{:.2f}".format(textstat.flesch_reading_ease(myfile)),
+                'polarity':"{:.2f}".format( blob.sentiment.polarity),
+                'subjectivity':"{:.2f}".format( blob.sentiment.subjectivity)})
 
     # Catch a URLError exception - something went wrong when connecting!
     except urllib2.URLError as e:

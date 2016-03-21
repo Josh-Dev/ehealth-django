@@ -7,12 +7,18 @@ urlpatterns = patterns('',
     url(r'^about/$', views.about, name='about'),
     url(r'^how/$', views.how, name='how'),
     url(r'^register/$', views.register, name='register'),
-    #url(r'^login/$', views.user_login, name='login'),
+    url(r'^login/$', views.user_login, name='login'),
     url(r'^user_finder/$', views.user_finder, name='user_finder'),
     url(r'^user_finder/?search_bar=(?P<query>[\w\-]+)/$', views.user_finder, name='user_finder_res'),
     url(r'^user_profile/(?P<username>[\w\-]+)/$',views.user_profile, name='user_profile'),
     url(r'^user_profile/(?P<username>[\w\-]+)/(?P<current_folder>[\w\-]+)/$',views.user_profile, name='user_profile'),
     url(r'^advanced/$',views.advanced_search,name='advanced_search'),
     url(r'^saved_pages/$',views.saved_pages,name='saved_pages'),
+<<<<<<< HEAD
     url(r'^manage_account/$',views.manage_account,name='manage_account'),
     url(r'^accounts/',include('registration.backends.simple.urls'))
+=======
+    url(r'^logout/$', views.user_logout, name='auth_logout'),
+    url(r'^manage_account/$',views.manage_account,name='manage_account')
+)
+>>>>>>> b4aaac43a2767fbb27ae47f5e8335e7771ecfc1b

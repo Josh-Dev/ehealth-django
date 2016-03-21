@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 class UserProfile(models.Model):
 	# user that the profile belongs to
@@ -24,8 +25,15 @@ class Folder(models.Model):
 	user = models.ForeignKey(UserProfile)
 	# name of the folder
 	name = models.CharField(max_length=128)
+	#slug of the folder
+	slug = models.SlugField()
 	# status of the privacy of the folder
 	privacy = models.BooleanField(default=False)
+
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.name)
+		super(Folder, self).save(*args, **kwargs)
+
 	def __unicode__(self):
 		return self.name
 
