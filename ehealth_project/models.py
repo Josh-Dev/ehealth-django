@@ -16,7 +16,7 @@ class UserProfile(models.Model):
 	# Gender of the user
 	gender = models.CharField(max_length=128)
 	#Image for the profile ( avatar )
-	pic = models.ImageField(default='/static/images/blank.jpg')
+	picture = models.ImageField(default='/static/images/blank.jpg')
 	def __unicode__(self):
 		return self.user.username
 		
