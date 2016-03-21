@@ -53,7 +53,26 @@ def user_profile(request,username,current_folder=None):
     context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
 
     return render(request,'ehealth_project/user_profile.html', context_dict)
+def user_profile_form(request):
+    registered = True
+    if request.method == 'POST':
+        profile_form = UserProfileForm(data=request.POST)
+        if profile_form.is_valid():
+            profile = profile_form.save(commit=False)
+            profile.user = user
 
+         
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+           
+            profile.save()
+    else:
+            print user_form.errors, profile_form.errors
+    profile_form = UserProfileForm()
+    return render(request,
+            'ehealth_project/user_profile_form.html',
+            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 def user_finder(request):
     qd = request.GET #gets a query dictionary
     users = User.objects.all().order_by('username')
