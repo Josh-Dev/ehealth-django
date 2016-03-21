@@ -21,9 +21,11 @@
     <div class="row eh-row-divide">
         <!--Create new-->
         <div class="col-xs-12">
-            <h4><a href="#" data-toggle="collapse" data-target="#userFolders">My Categories</a></h4>
+            <h4><a href="#" data-toggle="collapse" data-target="#userFolders">Categories</a></h4>
+            {% if current_users_profile %}
             <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modalNewFolder"><i class="fa fa-folder"></i> New
             </button>
+            {% endif %}
         </div>
         <!--//col-->
         <!--Folders-->
@@ -50,13 +52,15 @@
             {% if current_folder %}
             <div class="eh-row-divide">
                 <!-- Display saved pages in an ordered list -->
-                <h4>My Pages</h4>
+                <h4>Pages</h4>
                 <div class="list-group">
                     {% for p in current_pages %}
                     <div class="list-group-item">
                         <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
-                                    <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
-                                </h4>
+                            <a href=""
+                            <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
+
+                        </h4>
                         <p class="list-group-item-text">{{ p.summary }}</p>
                     </div>
                     {% endfor %}
