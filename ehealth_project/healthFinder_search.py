@@ -6,7 +6,7 @@ from textblob import TextBlob
 from textstat.textstat import textstat
 import requests
 
-# Add your BING_API_KEY
+# Add your HEALTHFINDER_API_KEY
 
 HEALTHFINDER_API_KEY = 'nolnuoubegzidkdu'  # !!!!! REGISTER ON AZURE !!!!!
 
