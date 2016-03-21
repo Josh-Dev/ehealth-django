@@ -264,3 +264,22 @@ def save_page(request):
     
     #Return success/fail
     return HttpResponse('Was a success')
+    
+@login_required
+def delete_folder(request, id=0, current_folder=None):
+    #folder_id = request.GET.get('folder_id')
+    #folder_curr = request.GET.get('folder_current')
+    
+    #Delete
+    up = UserProfile.objects.all().get(user=request.user)
+    folder = Folder.objects.all().get(id=folder_id);
+    
+    if(folder.name==current_folder):
+       current_folder = None
+    
+    #delete folder
+    folder.delete()
+    
+    return HttpResponseRedirect('/ehealth/user_profile/' + up.user.username + '/' + folder_curr)
+    
+    

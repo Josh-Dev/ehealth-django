@@ -16,6 +16,9 @@ urlpatterns = patterns('',
     url(r'^saved_pages/$',views.saved_pages,name='saved_pages'),
     url(r'^manage_account/$',views.manage_account,name='manage_account'),
     url(r'^logout/$', views.user_logout, name='auth_logout'),
-    url(r'^save_page/$', views.save_page, name='save_page')
+    url(r'^save_page/$', views.save_page, name='save_page'),
+    url(r'^delete_folder/$', views.delete_folder, name='delete_folder'),
+    url(r'^delete_folder/(?P<id>[\W\-]+)/$', views.delete_folder, name='delete_folder'),
+    url(r'^delete_folder/(?P<id>[\w\-]+)/(?P<current_folder>[\w\-]+)/$', views.delete_folder, name='delete_folder')
 )
 

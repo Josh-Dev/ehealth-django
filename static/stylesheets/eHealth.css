@@ -31,6 +31,9 @@ eHealth styles
     float:right;
     font-size:12px;
 }
+.eh-delete-x{
+    float:right
+}
 body{
     padding-top: 72px;
 }

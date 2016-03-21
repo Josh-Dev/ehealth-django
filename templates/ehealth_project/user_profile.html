@@ -33,12 +33,12 @@
             <div id="userFolders" class="collapse in">
                 <br/>
                 <table class="table table-striped">
-
                     <tbody>
                     </tbody>
                     {% for upf in users_public_folders %}
                     <tr>
-                        <td><a href="{% url 'user_profile' user_prof %}{{ upf.slug }}">{{ upf }}</a></td>
+                        <td><a href="{% url 'user_profile' user_prof %}{{ upf.slug }}">{{ upf }}</a><a><i class="fa fa-times"></i>
+</a></td>
                     </tr>
                     {% endfor %}
                 </table>
