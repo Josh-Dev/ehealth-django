@@ -13,6 +13,12 @@ eHealth styles
     margin-bottom: 20px;
     border-bottom: 1px solid #EEE;
 }
+.eh-row-divide{
+    border-top: 1px solid #EEE
+}
+.eh-form-group{
+    width:400px;
+}
 .eh-footer{
     border-top: 1px solid #EEE;
     padding-top: 30px;
