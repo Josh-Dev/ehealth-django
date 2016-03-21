@@ -50,14 +50,14 @@
             <div class="list-group">
                 {% for result in result_list %}
                 <div class="list-group-item">
-                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result.title }}</a>
+                    <h4 id="resTitle" class="list-group-item-heading"><a id="resLink" href="{{ result.link }}">{{ result.title }}</a>
                     <!--Score-->
                     <!--<a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ result.readability }}<br/>Subjectivity: {{ result.subjectivity }}<br/>Polarity: {{ result.polarity }}" class="label label-default eh-score-result">Score</a>-->
-                    <button type="button" class="btn btn-xs eh-score-result" data-toggle="modal" data-target="#modalSave">Save</button>
+                    <button type="button" onclick="setSelectedPage(this)" class="btn btn-xs eh-score-result" data-toggle="modal" data-target="#modalSave">Save</button>
                     
                     
                     </h4>
-                    <p class="list-group-item-text">{{ result.summary }}</p>
+                    <p id="resSummary" class="list-group-item-text">{{ result.summary }}</p>
                 </div>
                 {% endfor %}
             </div>
@@ -95,6 +95,7 @@
                 <p>There are no available folders</p>
                 {% endif %}
                 <div class="text-right">
+                    <input type="button" class="btn btn-sucess" onclick="savePage()" value="Save"/>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -105,4 +106,7 @@
     <!--//modal dialog-->
 </div>
 <!--//modal-->
+
+<!--//hf's-->
+<input type"hidden" id="hfPage"/>
 {% endblock %}

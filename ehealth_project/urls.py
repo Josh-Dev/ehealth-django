@@ -16,5 +16,6 @@ urlpatterns = patterns('',
     url(r'^saved_pages/$',views.saved_pages,name='saved_pages'),
     url(r'^manage_account/$',views.manage_account,name='manage_account'),
     url(r'^logout/$', views.user_logout, name='auth_logout'),
+    url(r'^save_page/$', views.save_page, name='save_page')
 )
 

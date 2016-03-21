@@ -7,6 +7,7 @@ from ehealth_project.healthFinder_search import run_queryHF
 from ehealth_project.bing_Search import run_query
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 import random
 
 
@@ -234,3 +235,32 @@ def user_login(request):
     else:
        
         return render(request, 'ehealth_project/login.html', {})
+        
+   
+#Adds page to folder
+@login_required
+def save_page(request):
+    #Smash through the request and get the url, desc & folder
+    url = request.GET.get('url')
+    desc = request.GET.get('desc')
+    title = request.GET.get('title')
+    folder_name = request.GET.get('folder_name')
+    
+    #Score the page using APIs
+    #TO DO: (Roxandra apis)
+    scr_polarity = 0
+    scr_subjectivity = 0
+    scr_readability = 0
+    
+    #Save page
+    user_profile = UserProfile.objects.all().get(user=request.user)
+    folder = Folder.objects.all().get(name=folder_name,user=user_profile)
+    P = Page.objects.get_or_create(title=title,
+    url=url,summary=desc,
+    readability_score=scr_readability,
+    objectivity_score=scr_subjectivity,
+    sentimentality_score=scr_polarity,
+    folder=folder)
+    
+    #Return success/fail
+    return HttpResponse('Was a success')
