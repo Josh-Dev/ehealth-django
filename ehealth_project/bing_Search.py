@@ -66,7 +66,8 @@ def run_query(search_terms):
             results.append({
             'title': result['Title'],
             'link': result['Url'],
-            'summary': result['Description']
+            'summary': result['Description'],
+            'source': 'Bing'
                  })
 
     # Catch a URLError exception - something went wrong when connecting!

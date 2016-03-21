@@ -67,7 +67,8 @@ def run_queryMed(search_terms):
                 results.append({
                 'title': title,
                 'link': url,
-                'summary': summary
+                'summary': summary,
+                'source': 'Medline'
                  })
 
     # Catch a URLError exception - something went wrong when connecting!

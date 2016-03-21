@@ -146,22 +146,32 @@ def searchAll(request):
 
     #Execute Search
     if request.method == 'GET':
+    
         query = request.GET.get('searchTerms');
+        source = request.GET.get('Source');
+        
+        if source is None:
+            source = 'All'
+        
+        
         if query:
-            results_Bing = run_query(query)
-            results_HF = run_queryHF(query)
-            results_Med = run_queryMed(query)
-            result_list.extend(results_Bing)
-            result_list.extend(results_HF)
-            result_list.extend(results_Med)
-
+            if(source == 'All' or source == 'Bing'):
+                results_Bing = run_query(query)
+                result_list.extend(results_Bing)
+            if(source == 'All' or source == 'Healthfinder'):
+                results_HF = run_queryHF(query)
+                result_list.extend(results_HF)
+            if(source == 'All' or source == 'Medline'):
+                results_Med = run_queryMed(query)
+                result_list.extend(results_Med)
+            
     random.shuffle(result_list,random.random)
     if request.user.is_authenticated():
         user = request.user
         #Get user's folders
         folder_list = getUserFolders(UserProfile.objects.all().get(user=user))
 
-    return render(request,'ehealth_project/results.html',{'result_list':result_list,'folders':folder_list})
+    return render(request,'ehealth_project/results.html',{'result_list':result_list,'folders':folder_list, 'searchTerms': query})
 
 def register(request):
     registered = False

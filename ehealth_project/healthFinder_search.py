@@ -66,7 +66,8 @@ def run_queryHF(search_terms):
                 results.append({
                 'title': title,
                 'link': url,
-                'summary': summary[0:280]+"..."
+                'summary': summary[0:280]+"...",
+                'source': 'Healthfinder'
                  })
         for result in root.findall("Tools"):
             for data in result.findall("Tool"):
@@ -76,7 +77,8 @@ def run_queryHF(search_terms):
                 results.append({
                 'title': title,
                 'link': url,
-                'summary': summary[0:280]+"..."
+                'summary': summary[0:280]+"...",
+                'source': 'Healthfinder'
                  })
 
     # Catch a URLError exception - something went wrong when connecting!

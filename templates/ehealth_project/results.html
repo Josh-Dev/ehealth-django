@@ -3,7 +3,7 @@
     <form id="search_form" method="GET" action="{% url 'results' %}">
         <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> eHealth Search</h2>
         <div class="input-group">
-            <input type="text" name="searchTerms" id="searchTerms" class="form-control" placeholder="e.g. Diabetes, Chemotherapy, Help"
+            <input type="text" name="searchTerms" id="searchTerms" class="form-control" value="{{ searchTerms }}" placeholder="e.g. Diabetes, Chemotherapy, Help"
             />
             <div class="input-group-btn">
                 <button type="submit" class="btn btn-default">Search</button>
@@ -14,36 +14,21 @@
     <!--//Search form-->
 </div>
 <div class="container">
-    <div class="nav nav-tabs nav-justified">
-        <ul>
-            <a role="presentation" href="&Source=All">All Results</a>
-        </ul>
-        <ul>
-            <a role="presentation" href="&Source=Bing">Bing</a>
-        </ul>
-        <ul>
-            <a role="presentation" href="&Source=Healthfinder">Healthfinder</a>
-        </ul>
-        <ul>
-            <a role="presentation" href="&Source=Medline">Medline</a>
-        </ul>
-        
-    </div>
     <div class="row">
         <div class="col-xs-12 col-sm-3">
-            All Results
+            <a href="results?searchTerms={{ searchTerms }}&Source=All">All Results</a></li>
         </div>
         <!--//Col-->
         <div class="col-xs-12 col-sm-3">
-            Bing
+            <a href="results?searchTerms={{ searchTerms }}&Source=Bing">Bing</a>
         </div>
         <!--//Col-->
         <div class="col-xs-12 col-sm-3">
-            MedLine
+           <a href="results?searchTerms={{ searchTerms }}&Source=Healthfinder">Healthfinder<a/>
         </div>
         <!--//Col-->
         <div class="col-xs-12 col-sm-3">
-            HealthFinder
+            <a href="results?searchTerms={{ searchTerms }}&Source=Medline">Medline</a>
         </div>
         <!--//Col-->
     </div>
@@ -69,10 +54,8 @@
                     <!--Score-->
                     <!--<a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ result.readability }}<br/>Subjectivity: {{ result.subjectivity }}<br/>Polarity: {{ result.polarity }}" class="label label-default eh-score-result">Score</a>-->
                     <button type="button" onclick="setSelectedPage(this);" class="btn btn-xs eh-score-result" data-toggle="modal" data-target="#modalSave">Save</button>
-                    
-                    
                     </h4>
-                    <p id="resSummary" class="list-group-item-text">{{ result.summary }}</p>
+                    <p id="resSummary" class="list-group-item-text">Source: {{result.source}} {{ result.summary }}</p>
                 </div>
                 {% endfor %}
             </div>
@@ -123,5 +106,5 @@
 <!--//modal-->
 
 <!--//hf's-->
-<input type"hidden" id="hfPage"/>
+<input type="hidden" id="hfPage"/>
 {% endblock %}
