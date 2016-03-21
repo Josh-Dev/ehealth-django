@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 def populate():
 
 	generic_user = User.objects.get_or_create(username="John", password="1234", email="john@email.com",is_superuser=False, is_staff=False)[0]
-	generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", address_1 = "123 fakestreet",address_2="", city="City", post_code= "GR8 M8", gender="human")[0]
+	generic_user_profile = UserProfile.objects.get_or_create(user=generic_user,dob="2012-03-09", gender="human")[0]
 
 	test_cat_1 = add_cat(generic_user_profile,"diabetes",True)
 	
@@ -47,20 +47,20 @@ def populate():
 		for p in Page.objects.filter(folder=f):
 			print "- {0} - {1}".format(str(f), str(p))
 
-	add_user(username="Jeffery", password="4321", email="jj@email.com",dob="1980-05-12", add_1 = "123 Fake Avenue",add_2="Fakeshire", city="Fakeville", post_code= "G14 2FH", gender="Female")
+	add_user(username="jen", password="jen", email="jen@email.com",dob="1980-05-12", gender="Female")
 
-	add_user(username="Geoff", password="4235", email="gg@email.com",dob="1987-05-12", add_1 = "123 Fake Lane",add_2="Fakeshire", city="Fakeville", post_code= "G16 2FD", gender="Male")
+	add_user(username="jill", password="jill", email="jill@email.com",dob="1987-05-12", gender="Male")
 
-	add_user(username="Sam", password="4321", email="sam@email.com",dob="1980-05-12", add_1 = "123 Fake Road",add_2="Fakeshire", city="Fakeshire", post_code= "G11 2ER", gender="Male")
+	add_user(username="bob", password="bob", email="bob@email.com",dob="1980-05-12", gender="Male")
 
-	add_user(username="Fred", password="7455", email="fred@email.com",dob="1987-11-02", add_1 = "123 Fake Street",add_2="Fakeshire", city="Faketown", post_code= "G12 2FJ", gender="Female")
+	add_user(username="Fred", password="7455", email="fred@email.com",dob="1987-11-02", gender="Female")
 
 	for u in UserProfile.objects.all():
 		print "-{0}".format(str(u))
 
-def add_user(username, password, email, dob, add_1, add_2, city, post_code, gender):
+def add_user(username, password, email, dob, gender):
 	u = User.objects.get_or_create(username=username,password=password, email=email, is_superuser=False, is_staff=False)[0]
-	up = UserProfile.objects.get_or_create(user=u,dob=dob,address_1=add_1,address_2=add_2,city=city,post_code=post_code, gender=gender)[0]
+	up = UserProfile.objects.get_or_create(user=u,dob=dob, gender=gender)[0]
 	up.save()
 	return up
 

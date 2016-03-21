@@ -23,13 +23,14 @@
             <!--Nav-->
             <div id="#eHealthNavbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+					<li><a href="{% url 'user_finder' %}"> Find Users </a></li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'user_profile' user.username %}">My Pages</a></li>
                     {% endif %}
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{% url 'manage_account' %}">Hi Mary</a></li>
+                    <li><a href="{% url 'manage_account' %}">Hi {{ user.username }}</a></li>
                     <li><a href="{% url 'auth_logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
                 {% else %}
