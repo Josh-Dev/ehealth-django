@@ -20,7 +20,7 @@
         <div class="folder_dir">
         <ul>
            {% for upf in users_public_folders %}
-                <li><a href="{% url 'user_profile' user_prof upf %}">{{ upf }}</a>
+                <li><a href="{% url 'user_profile' user_prof %}{{ upf.slug }}">{{ upf }}</a>
                 {% if current_users_profile %}
                     <!-- Need the privacy button here -->
                 {% endif %}</li>
@@ -30,25 +30,25 @@
         <div class="page_display">
             {% if current_folder %}
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{ current_folder }} > Pages</h3>
-                    <!-- Display folder pages in an ordered list -->
+                    <h3 class="panel-title">Results</h3>
+                    <!-- Display saved pages in an ordered list -->
                     <div class="panel-body">
                         <div class="list-group">
                             {% for p in current_pages %}
-                                <div class="list-group-item">
+                            <div class="list-group-item">
                                 <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
-                                    <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: 100<br/>Subjectivity: 100<br/>Sentimentality: 100" class="label label-default eh-score-result">Score: 100</a>
+                                    <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
                                     {% if current_users_profile %}<p>(Save Button)</p>{% endif %}
                                 </h4>
                                 <p class="list-group-item-text">{{ p.summary }}</p>
-                                </div>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
+                    {% endif %}
                 </div>
-                {% else %}
-                    <h3>No Folders to display</h3>
-        </div>
-        {% endif %}
+            </div>
+        {% else %}
+            <h3>No Folders to display</h3>
     {% endif %}
 {% endblock %}

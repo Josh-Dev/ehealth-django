@@ -39,9 +39,10 @@ def user_profile(request,username,current_folder=None):
 
     # gets all the public folders from the user, and if a current folder has been selected then the current_folder is set to
     # the current_folder passed to the view.  Gets all the pages in the current_folder.
-    users_public_folders = Folder.objects.filter(user=user_prof, privacy=False)
+    users_public_folders = Folder.objects.all().filter(user=user_prof, privacy=False)
+
     if current_folder:
-        current_folder = Folder.objects.all().get(name=current_folder)
+        current_folder = Folder.objects.all().get(slug=current_folder)
         current_pages = Page.objects.all().filter(folder=current_folder)
 
     context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
