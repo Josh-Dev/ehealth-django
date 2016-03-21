@@ -1,7 +1,6 @@
 {% extends 'ehealth_project/base.html' %} {% block title %} Search Results {% endblock %} {% block body_block %}
 <div class="container eh-advanced-searchbar">
     <form id="search_form" method="GET" action="{% url 'results' %}">
-        {% csrf_token %}
         <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> eHealth Search</h2>
         <div class="input-group">
             <input type="text" name="searchTerms" id="searchTerms" class="form-control" placeholder="e.g. Diabetes, Chemotherapy, Help"
@@ -51,7 +50,13 @@
             <div class="list-group">
                 {% for result in result_list %}
                 <div class="list-group-item">
-                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result.title }}</a><a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ result.readability }}<br/>Subjectivity: {{ result.subjectivity }}<br/>Polarity: {{ result.polarity }}" class="label label-default eh-score-result">Score</a></h4>
+                    <h4 class="list-group-item-heading"><a href="{{ result.link }}">{{ result.title }}</a>
+                    <!--Score-->
+                    <!--<a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ result.readability }}<br/>Subjectivity: {{ result.subjectivity }}<br/>Polarity: {{ result.polarity }}" class="label label-default eh-score-result">Score</a>-->
+                    <button type="button" class="btn btn-xs eh-score-result" data-toggle="modal" data-target="#modalSave">Save</button>
+                    
+                    
+                    </h4>
                     <p class="list-group-item-text">{{ result.summary }}</p>
                 </div>
                 {% endfor %}
@@ -65,4 +70,38 @@
     <h2>No results found!</h2>
     <br/> {% endif %}
 </div>
+
+<!--Modal-->
+<div id="modalSave" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4>Save Page</h4>
+            </div>
+            <!--//modal header-->
+            <div class="modal-body">
+                {% if folders %}
+                <p>Please select a category</p>
+                <select name="fol_name" id="fol_name" class="form control">
+
+                    {% for fol in folders %}
+                    <option value="{{ fol.name}}">{{ fol.name}}</option>
+                    {% endfor %}
+
+                </select>
+                {% else %}
+                <p>There are no available folders</p>
+                {% endif %}
+                <div class="text-right">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+            <!--modal body-->
+        </div>
+        <!--//modal content-->
+    </div>
+    <!--//modal dialog-->
+</div>
+<!--//modal-->
 {% endblock %}

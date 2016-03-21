@@ -106,31 +106,38 @@ def searchMedLine(request):
             result_list = run_queryMed(query)
 
     #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+    
+def getUserFolders(user_prof):
+    folder_list = []
+    
+    if Folder.objects.all().filter(user= user_prof) != []:
+        folder_list = Folder.objects.all().filter(user=user_prof)
+        
+    return folder_list;
 
 def searchAll(request):
     result_list = []
+    folder_list = []
     
+    #Execute Search
     if request.method == 'GET':
         query = request.GET.get('searchTerms');
         if query:
             results_Bing = run_query(query)
-            results_HF = run_queryHF(query)
-            results_Med = run_queryMed(query)
+            #results_HF = run_queryHF(query)
+            #results_Med = run_queryMed(query)
             result_list.extend(results_Bing)
-            result_list.extend(results_HF)
-            result_list.extend(results_Med)
+            #result_list.extend(results_HF)
+            #result_list.extend(results_Med)
 
-    if request.method == 'POST':
-        query = request.POST['searchTerms'].strip()
-        if query:
-            results_Bing = run_query(query)
-            results_HF = run_queryHF(query)
-            results_Med = run_queryMed(query)
-            result_list.extend(results_Bing)
-            result_list.extend(results_HF)
-            result_list.extend(results_Med)
-    random.shuffle(result_list,random.random)
-    return render(request,'ehealth_project/results.html',{'result_list':result_list})
+    #random.shuffle(result_list,random.random)
+    
+    if request.user.is_authenticated():
+        user = request.user
+        #Get user's folders
+        folder_list = getUserFolders(UserProfile.objects.all().get(user=user))
+    
+    return render(request,'ehealth_project/results.html',{'result_list':result_list,'folders':folder_list})
 
 def register(request):
     registered = False
