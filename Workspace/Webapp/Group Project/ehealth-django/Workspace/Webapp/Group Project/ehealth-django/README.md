@@ -1,2 +1,0 @@
-# ehealth-django
-eHealth application. 
