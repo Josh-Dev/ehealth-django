@@ -1,29 +1,44 @@
 {% extends 'ehealth_project/base.html' %} {% block title %}User Profile {{ user_prof }}{% endblock %} {% load staticfiles%}
 {% block body_block %}
-<form id="profile_form" method="post" action="/ehealth/user_profile_form/" enctype="multipart/form-data">
-    {% csrf_token %} {{ profile_form.as_p }}
-    <fieldset>
-        <div class="form-group">
-            <label for="age">Age: </label>
-            <input type="number" min="0" max="65" class="form-control" name="age" id="age" />
-        </div>
-        <div class="form-group">
-            <label for="sex">Sex: </label>
-            <select class="form-control" id="sex" name="sex">
-                <option id="male">Male</option>
-                <option id="female">Female</option>
-                <option id="other">Other</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="pic">Image: </label>
-            <input type="file" name="pic" accept="image/*">
-        </div>
-        <div class="text-right">
-            <input type="submit" class="btn btn-submit" value="Submit"/>
-        </div>
-    </fieldset>
+<div class="container">
 
-    <input type="submit" name="submit" value="Submit" />
-</form>
+    <h3>Manage Your Profile</h3>
+    <div class="row eh-row-divide">
+        <br/>
+        <div class="col-xs-12">
+            <form id="profile_form" method="post" action="/ehealth/user_profile_form/" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="form-group">
+                        <label for="age">Age: </label>
+                        <input type="number" min="0" max="65" placeholder="10" class="form-control" name="age" id="age" />
+                    </div>
+                    <div class="form-group">
+                        <label for="sex">Sex: </label>
+                        <select class="form-control" id="sex" name="sex">
+                            <option id="male">Male</option>
+                            <option id="female">Female</option>
+                            <option id="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pic">Upload a picture to your profile... </label>
+                        <input type="file" class="form-control" name="pic" accept="image/*">
+                    </div>
+                    <br/>
+                    <div class="text-right">
+                        <input type="submit" class="btn btn-success" value="Submit" />
+                    </div>
+                    <br/>
+                </fieldset>
+            </form>
+            <!--//End Form-->
+        </div>
+        <!--//End col-->
+
+    </div>
+    <!--//End Row-->
+</div>
+<!--//Container-->
+
 {% endblock %}

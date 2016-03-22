@@ -1,31 +1,44 @@
-{% extends 'ehealth_project/base.html' %}
-{% load static %}
-{% block title %} User Finder {%  endblock %}
-{% block body_block %}
+{% extends 'ehealth_project/base.html' %} {% load static %} {% block title %} User Finder {% endblock %} {% block body_block %}
 
+<div class="container">
     <form id="user_finder_form" method="get" action="/ehealth/user_finder/">
-        <label for="user_search_bar"> Search: </label>
-        <input type="text" name="search_bar" id="user_search_bar" placeholder="Name or email"/>
-        <input type="submit" value="Go"/>
+        <label for="user_search_bar">Search: </label>
+        <div class="form-group eh-form-group">
+            <div class="input-group">
+                <input type="text" name="search_bar" class="form-control" id="user_search_bar" placeholder="Name or email" />
+                <div class="input-group-btn">
+                    <input type="submit" class="btn btn-default" value="Go" />
+                </div>
+                <!--//Input group btn-->
+            </div>
+            <!--//Input group-->
+        </div>
+
+
+
     </form>
 
     <a href="{% url 'user_finder' %}" id="show_all">show all</a>
 
-    <h2> Users: </h2>
-    {% if user_profs %}
-        <ul class="grid-list">
-            {% for u in user_profs %}
-                {% if not u.user.is_superuser %}
-                <li class="grid-item">
-                    <div class="img-with-text">
-                        <a href="{% url 'user_profile' u %}"><img class="img-circle" src="{{ u.pic }}" alt="Profile pic"></a>
-                        <p>Username: {{ u }} <br />Email: {{ u.user.email }} <br /> </p>
-                    </div>
-                </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-        {% else %}
-            <strong>No users.</strong>
-    {% endif %}
+    <h2> Users: </h2> {% if user_profs %}
+    <div class="eh-row-divide"></div>
+    <br/>
+    <ul class="grid-list">
+        {% for u in user_profs %} {% if not u.user.is_superuser %}
+        <li class="grid-item">
+            <div class="img-with-text">
+                <a href="{% url 'user_profile' u %}"><img class="img-circle" src="{{ u.pic }}" alt="Profile pic"></a>
+                <p>Username: {{ u }}
+                    <br />Email: {{ u.user.email }}
+                    <br /> </p>
+            </div>
+        </li>
+        {% endif %} {% endfor %}
+    </ul>
+    {% else %}
+    <strong>No users.</strong> {% endif %}
+</div>
+<!--//Container-->
+
+
 {% endblock %}

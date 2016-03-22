@@ -25,6 +25,7 @@
                 <ul class="nav navbar-nav">
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'user_profile' user.username %}">My Pages</a></li>
+                    <li><a href="{% url 'user_finder' %}">Browse Users</a></li>
                     {% endif %}
                 </ul>
                 {% if user.is_authenticated %}
