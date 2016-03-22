@@ -7,6 +7,12 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	# date of birth of User
 	dob = models.DateField()
+	age = models.IntegerField(default=18)
+	# address of the user
+	address_1 = models.CharField(max_length=128)
+	address_2 = models.CharField(max_length=128, blank=True)
+	city = models.CharField(max_length=64, default="")
+	post_code = models.CharField(max_length=8)
 	# Gender of the user
 	gender = models.CharField(max_length=128)
 	#Image for the profile ( avatar )
@@ -43,9 +49,9 @@ class Page(models.Model):
 	# short summary of the page contents
 	summary = models.TextField()
 	# scores used to determine how good the page is
-	readability_score = models.IntegerField(default=0)
-	objectivity_score = models.IntegerField(default=0)
-	sentimentality_score = models.IntegerField(default=0)
+	readability_score = models.FloatField(default=0)
+	objectivity_score = models.FloatField(default=0)
+	sentimentality_score = models.FloatField(default=0)
 	def __unicode__(self):
 		return self.title
 
