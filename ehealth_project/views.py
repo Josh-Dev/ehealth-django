@@ -232,11 +232,11 @@ def basic_search(request):
 
 def about(request):
     context_dict = {}
-    return render(request, 'ehealth_project/search.html',context_dict)
+    return render(request, 'ehealth_project/about.html',context_dict)
 
 def how(request):
     context_dict = {}
-    return render(request, 'ehealth_project/search.html',context_dict)
+    return render(request, 'ehealth_project/how.html',context_dict)
 from django.contrib.auth import logout
 
 
