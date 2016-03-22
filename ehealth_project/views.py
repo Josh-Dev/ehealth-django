@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from ehealth_project.models import UserProfile,Folder,Page
 from ehealth_project.forms import UserForm,UserProfileForm,UserFinderForm
@@ -306,19 +306,20 @@ def save_page(request):
     return HttpResponse('Was a success')
 
 @login_required
-def delete_folder(request, id=0, current_folder=None):
+def delete_folder(request, id):
     #folder_id = request.GET.get('folder_id')
     #folder_curr = request.GET.get('folder_current')
     
     #Delete
-    up = UserProfile.objects.all().get(user=request.user)
-    folder = Folder.objects.all().get(id=folder_id);
-    
-    if(folder.name==current_folder):
-       current_folder = None
-    
-    #delete folder
-    folder.delete()
-    
-    return HttpResponseRedirect('/ehealth/user_profile/' + up.user.username + '/' + folder_curr)
-    
+    Folder.objects.get(pk=id).delete()
+
+    return redirect('/ehealth/user_profile/'+str(request.user))
+
+def delete_page(request, id, current_folder):
+    #page_id = request.GET.get('page_id')
+    #page_curr = request.GET.get('page_current')
+
+    #Delete
+    Page.objects.get(pk=id).delete()
+
+    return redirect('/ehealth/user_profile/'+str(request.user)+"/"+str(current_folder))

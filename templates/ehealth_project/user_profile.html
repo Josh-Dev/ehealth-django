@@ -1,5 +1,5 @@
-{% extends 'ehealth_project/base.html' %} {% block title %}User Profile - {{ user_prof }}{% endblock %} {% load staticfiles
-%} {% block body_block %}
+{% extends 'ehealth_project/base.html' %} {% block title %}User Profile - {{ user_prof }}{% endblock %} {% load staticfiles %}
+{% block body_block %}
 <div class="container">
     <div class="row">
         <h3>{{ user_prof }}'s Pages </h3>
@@ -20,14 +20,17 @@
         </div>
         <!--//col-->
     </div>
+
     <br/>
     <!--//row-->
     <div class="row eh-row-divide">
         <!--Create new-->
         <div class="col-xs-12">
             <h4><a href="#" data-toggle="collapse" data-target="#userFolders">My Categories</a></h4>
+            {% if current_users_profile %}
             <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modalNewFolder"><i class="fa fa-folder"></i> New
             </button>
+            {% endif %}
         </div>
         <!--//col-->
         <!--Folders-->
@@ -40,8 +43,7 @@
                     </tbody>
                     {% for upf in users_public_folders %}
                     <tr>
-                        <td><a href="{% url 'user_profile' user_prof %}{{ upf.slug }}">{{ upf }}</a><a><i class="fa fa-times"></i>
-</a></td>
+                        <td><a href="{% url 'user_profile' user_prof %}{{ upf.slug }}">{{ upf }}</a>{% if current_users_profile %}<a href="{% url 'delete_folder' upf.id %}"><i class="fa fa-times"></i></a>{% endif %}</td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -60,7 +62,7 @@
                     <div class="list-group-item">
                         <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
                                     <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
-                                    {% if current_users_profile %}<p></p>{% endif %}
+                                    {% if current_users_profile %}<a href="{% url 'delete_page' p.id current_folder.slug %}"><i class="fa fa-times"></i></a>{% endif %}
                                 </h4>
                         <p class="list-group-item-text">{{ p.summary }}</p>
                     </div>
@@ -115,6 +117,6 @@
         <!--//modal dialog-->
     </div>
     <!--//modal-->
+</div>
 
-
-    {% endblock %}
+{% endblock %}

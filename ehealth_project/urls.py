@@ -18,8 +18,8 @@ urlpatterns = patterns('',
     url(r'^manage_account/$',views.user_profile_form,name='manage_account'),
     url(r'^logout/$', views.user_logout, name='auth_logout'),
     url(r'^save_page/$', views.save_page, name='save_page'),
-    url(r'^delete_folder/$', views.delete_folder, name='delete_folder'),
-    url(r'^delete_folder/(?P<id>[\W\-]+)/$', views.delete_folder, name='delete_folder'),
-    url(r'^delete_folder/(?P<id>[\w\-]+)/(?P<current_folder>[\w\-]+)/$', views.delete_folder, name='delete_folder')
+    url(r'^delete_folder/(?P<id>\d+)/$', views.delete_folder, name='delete_folder'),
+    url(r'^delete_page/(?P<id>\d+)/(?P<current_folder>[\w\-]+)/$', views.delete_page, name='delete_page')
+    #url(r'^delete_folder/(?P<id>[\w\-]+)/(?P<current_folder>[\w\-]+)/$', views.delete_folder, name='delete_folder')
 )
 
