@@ -94,47 +94,6 @@ def user_finder(request):
 
     return render(request,'ehealth_project/user_finder.html', {'users': users, 'user_profs':user_profs})
 
-
-
-def searchBing(request):
-
-    result_list = []
-
-    if request.method == 'POST':
-        query = request.POST['searchTerms'].strip()
-
-        if query:
-            # Run our Bing function to get the results list!
-            result_list = run_query(query)
-
-    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
-
-def searchHealthFinder(request):
-
-    result_list = []
-
-    if request.method == 'POST':
-        query = request.POST['searchTerms'].strip()
-
-        if query:
-            # Run our Bing function to get the results list!
-            result_list = run_queryHF(query)
-
-    #return render(request, 'ehealth_project/results.html.html', {'result_list': result_list})
-
-def searchMedLine(request):
-
-    result_list = []
-
-    if request.method == 'POST':
-        query = request.POST['searchTerms'].strip()
-
-        if query:
-            # Run our medLine function to get the results list!
-            result_list = run_queryMed(query)
-
-    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
-
 def getUserFolders(user_prof):
     folder_list = []
 
