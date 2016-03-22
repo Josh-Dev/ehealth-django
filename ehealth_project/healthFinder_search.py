@@ -2,9 +2,6 @@ __author__ = 'Ruxandra'
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree
 import urllib, urllib2
-from textblob import TextBlob
-from textstat.textstat import textstat
-import requests
 
 # Add your HEALTHFINDER_API_KEY
 
@@ -15,13 +12,13 @@ def run_queryHF(search_terms):
     # Specify the base
     root_url = 'http://healthfinder.gov/developer/Search'
 
-    # Wrap quotes around our query terms as required by the Bing API.
+    # Wrap quotes around our query terms as required by the HealthFinder API.
     # The query we will then use is stored within variable query.
     query = '{0}'.format(search_terms)
     query = urllib.quote(query)
 
     # Construct the latter part of our request's URL.
-    # Sets the format of the response to JSON and sets other properties.
+    # Sets the format of the response to XML and sets other properties.
     search_url = "{1}.xml?api_key={2}&keyword={0}".format(
         query,
         root_url,
@@ -29,7 +26,7 @@ def run_queryHF(search_terms):
 
         )
 
-    # Setup authentication with the Bing servers.
+    # Setup authentication with the HealthFinder servers.
     # The username MUST be a blank string, and put in your API key!
     username = ''
 
@@ -42,7 +39,7 @@ def run_queryHF(search_terms):
     results = []
 
     try:
-        # Prepare for connecting to Bing's servers.
+        # Prepare for connecting to HealthFinder's servers.
         handler = urllib2.HTTPBasicAuthHandler(password_mgr)
         opener = urllib2.build_opener(handler)
         urllib2.install_opener(opener)
