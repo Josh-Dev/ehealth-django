@@ -3,6 +3,10 @@ __author__ = 'Ruxandra'
 from bs4 import BeautifulSoup
 import xml.etree.ElementTree
 import urllib, urllib2
+from textblob import TextBlob
+from textstat.textstat import textstat
+import requests
+
 
 def run_queryMed(search_terms):
     # Specify the base
@@ -12,9 +16,9 @@ def run_queryMed(search_terms):
     # default is 10 - for testing purposes I changed it to 50, but that can be tweaked.
     #database used - healthTopics
     db = 'healthTopics'
-    retmax='50'
+    retmax='30'
 
-    # Wrap quotes around our query terms as required by the medLine API.
+    # Wrap quotes around our query terms as required by the Bing API.
     # The query we will then use is stored within variable query.
     query = '{0}'.format(search_terms)
     query = urllib.quote(query)

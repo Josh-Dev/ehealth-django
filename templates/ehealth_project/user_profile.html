@@ -34,18 +34,18 @@
         </div>
         <!--//col-->
         <!--Folders-->
-        {% if users_public_folders %}
+        {% if users_folders %}
         <div class="col-xs-12">
             <div id="userFolders" class="collapse in">
                 <br/>
                 <table class="table table-striped">
                     <tbody>
-                    </tbody>
-                    {% for upf in users_public_folders %}
+                    {% for uf in users_folders %}
                     <tr>
-                        <td><a href="{% url 'user_profile' user_prof %}{{ upf.slug }}">{{ upf }}</a>{% if current_users_profile %}<a href="{% url 'delete_folder' upf.id %}"><i class="fa fa-times"></i></a>{% endif %}</td>
+                        <td><a href="{% url 'user_profile' user_prof %}{{ uf.slug }}">{{ uf }}</a>{% if current_users_profile %}<a href="{% url 'delete_folder' uf.id %}"><i class="fa fa-times"></i></a>{% endif %}</td>
                     </tr>
                     {% endfor %}
+                    </tbody>
                 </table>
                 <!--//table-->
             </div>

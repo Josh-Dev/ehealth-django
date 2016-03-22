@@ -35,22 +35,24 @@ def user_profile(request,username,current_folder=None):
 
     #user = authenticate(username=user.username, password=user.password)
     #login(request,user)
-    current_users_profile = False
-    print user==request.user
-    if user==request.user:
-        current_users_profile = True
+    current_users_profile = (user==request.user)
 
     current_pages=None
 
     # gets all the public folders from the user, and if a current folder has been selected then the current_folder is set to
     # the current_folder passed to the view.  Gets all the pages in the current_folder.
-    users_public_folders = Folder.objects.all().filter(user=user_prof, privacy=False)
+    users_folders = Folder.objects.all().filter(user=user_prof)
+
+    if not current_users_profile:
+        users_folders = users_folders.filter(privacy=False)
+
+    print users_folders
 
     if current_folder:
         current_folder = Folder.objects.all().get(slug=current_folder)
         current_pages = Page.objects.all().filter(folder=current_folder)
 
-    context_dict={'user_prof':user_prof,'users_public_folders':users_public_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
+    context_dict={'user_prof':user_prof,'users_folders':users_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
 
     return render(request,'ehealth_project/user_profile.html', context_dict)
 def user_profile_form(request):
@@ -93,6 +95,47 @@ def user_finder(request):
     user_profs = UserProfile.objects.all().filter(user__in=users)
 
     return render(request,'ehealth_project/user_finder.html', {'users': users, 'user_profs':user_profs})
+
+
+
+def searchBing(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['searchTerms'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_query(query)
+
+    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
+
+def searchHealthFinder(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['searchTerms'].strip()
+
+        if query:
+            # Run our Bing function to get the results list!
+            result_list = run_queryHF(query)
+
+    #return render(request, 'ehealth_project/results.html.html', {'result_list': result_list})
+
+def searchMedLine(request):
+
+    result_list = []
+
+    if request.method == 'POST':
+        query = request.POST['searchTerms'].strip()
+
+        if query:
+            # Run our medLine function to get the results list!
+            result_list = run_queryMed(query)
+
+    #return render(request, 'ehealth_project/search.html', {'result_list': result_list})
 
 def getUserFolders(user_prof):
     folder_list = []
@@ -191,11 +234,11 @@ def basic_search(request):
 
 def about(request):
     context_dict = {}
-    return render(request, 'ehealth_project/about.html',context_dict)
+    return render(request, 'ehealth_project/search.html',context_dict)
 
 def how(request):
     context_dict = {}
-    return render(request, 'ehealth_project/how.html',context_dict)
+    return render(request, 'ehealth_project/search.html',context_dict)
 from django.contrib.auth import logout
 
 
