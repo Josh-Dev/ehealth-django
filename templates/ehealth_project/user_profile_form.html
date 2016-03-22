@@ -1,11 +1,29 @@
-{% extends 'ehealth_project/base.html' %} 
-{% block title %}User Profile  {{ user_prof }}{% endblock %} 
-{% load staticfiles%} 
+{% extends 'ehealth_project/base.html' %} {% block title %}User Profile {{ user_prof }}{% endblock %} {% load staticfiles%}
 {% block body_block %}
 <form id="profile_form" method="post" action="/ehealth/user_profile_form/" enctype="multipart/form-data">
-		{% csrf_token %}
-		{{ profile_form.as_p }}
-		
-		<input type="submit" name="submit" value="Submit" />
+    {% csrf_token %} {{ profile_form.as_p }}
+    <fieldset>
+        <div class="form-group">
+            <label for="age">Age: </label>
+            <input type="number" min="0" max="65" class="form-control" name="age" id="age" />
+        </div>
+        <div class="form-group">
+            <label for="sex">Sex: </label>
+            <select class="form-control" id="sex" name="sex">
+                <option id="male">Male</option>
+                <option id="female">Female</option>
+                <option id="other">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="pic">Image: </label>
+            <input type="file" name="pic" accept="image/*">
+        </div>
+        <div class="text-right">
+            <input type="submit" class="btn btn-submit" value="Submit"/>
+        </div>
+    </fieldset>
+
+    <input type="submit" name="submit" value="Submit" />
 </form>
-{% endblock %}	
+{% endblock %}

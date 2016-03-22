@@ -18,7 +18,7 @@
                 {% if not u.user.is_superuser %}
                 <li class="grid-item">
                     <div class="img-with-text">
-                        <a href="{% url 'user_profile' u %}"><img src="{{ u.pic }}" alt="Profile pic"></a>
+                        <a href="{% url 'user_profile' u %}"><img class="img-circle" src="{{ u.pic }}" alt="Profile pic"></a>
                         <p>Username: {{ u }} <br />Email: {{ u.user.email }} <br /> </p>
                     </div>
                 </li>
