@@ -16,8 +16,8 @@ def run_queryMed(search_terms):
 
     # Wrap quotes around our query terms as required by the medLine API.
     # The query we will then use is stored within variable query.
-    query = '{0}'.format(search_terms)
-    query = urllib.quote(query)
+    query = "'{0}'".format(search_terms)
+    query = urllib.quote_plus(query)
 
     # Construct the latter part of our request's URL.
     # Sets the format of the response to XML and sets other properties.

@@ -14,8 +14,13 @@ def run_queryHF(search_terms):
 
     # Wrap quotes around our query terms as required by the HealthFinder API.
     # The query we will then use is stored within variable query.
-    query = '{0}'.format(search_terms)
-    query = urllib.quote(query)
+    if len(search_terms.split())>1:
+        search_terms.replace(" ","%20")
+        query = "'{0}'".format(search_terms)
+        query = urllib.quote(query)
+    else:
+        query = "'{0}'".format(search_terms)
+        query = urllib.quote(query)
 
     # Construct the latter part of our request's URL.
     # Sets the format of the response to XML and sets other properties.
