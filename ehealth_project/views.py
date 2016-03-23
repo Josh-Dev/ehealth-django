@@ -55,30 +55,31 @@ def user_profile(request,username,current_folder=None):
     context_dict={'user_prof':user_prof,'users_folders':users_folders,'current_pages':current_pages, 'current_folder':current_folder, 'current_users_profile': current_users_profile}
 
     return render(request,'ehealth_project/user_profile.html', context_dict)
+    
 def user_profile_form(request):
-    registered = True
+    user_prof = UserProfile.objects.all().get(user=request.user)
     if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-        if profile_form.is_valid():
-            user = user_form.save()
-            profile = profile_form.save(commit=False)
-
-            profile.user = user
-
-         
-            if 'pic' in request.FILES:
-                profile.pic = request.FILES['pic']
-
-           
-            profile.save()
-        else:
-            print user_form.errors, profile_form.errors
-    user_form = UserForm()
-    profile_form = UserProfileForm()
+        age = request.POST.get('age')
+        sex = request.POST.get('sex')
+        #pic = request.FILES['pic']
+        #print pic
+        
+        user_prof.age = age
+        user_prof.gender = sex
+        #user_prof.pic = pic
+        user_prof.save()
+    
+        
+    registered = True
+    #profile_form = UserProfileForm() Might use later 
+    
+    age = user_prof.age
+    sex = user_prof.gender
+    
     return render(request,
             'ehealth_project/user_profile_form.html',
-            {'user_form':user_form,'profile_form': profile_form, 'registered': registered} )
+            {'age':age, 'sex':sex, 'registered': registered} )
+
 def user_finder(request):
     qd = request.GET #gets a query dictionary
     users = User.objects.all().order_by('username')
@@ -245,7 +246,6 @@ def save_page(request):
     folder_name = request.GET.get('folder_name')
 
     #Score the page using APIs
-    #TO DO: (Ruxandra apis)
 
     r = requests.get(url)  #Open the url, read the contents then score them. Seems to be slowing down the app quite a bit.
     myfile = BeautifulSoup(r.text,"html.parser").text
