@@ -12,14 +12,13 @@ def run_queryHF(search_terms):
     # Specify the base
     root_url = 'http://healthfinder.gov/developer/Search'
 
-    # Wrap quotes around our query terms as required by the HealthFinder API.
     # The query we will then use is stored within variable query.
     if len(search_terms.split())>1:
         search_terms.replace(" ","%20")
-        query = "'{0}'".format(search_terms)
+        query = '{0}'.format(search_terms)
         query = urllib.quote(query)
     else:
-        query = "'{0}'".format(search_terms)
+        query = '{0}'.format(search_terms)
         query = urllib.quote(query)
 
     # Construct the latter part of our request's URL.
