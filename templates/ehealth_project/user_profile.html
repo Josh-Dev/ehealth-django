@@ -26,7 +26,33 @@
     <div class="row eh-row-divide">
         <!--Create new-->
         <div class="col-xs-12">
-            <h4><a href="#" data-toggle="collapse" data-target="#userFolders">My Categories</a></h4>
+            <div class="row">
+            <br />
+            <div class="col-md-2 col-xs-12"><h4><a href="#" data-toggle="collapse" data-target="#userFolders">My Categories</a></h4></div>
+            <div class="col-md-2 col-xs-12"><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content="Polarity:
+                                                                                                                                                                             <ul>
+                                                                                                                                                                                    <li> ~ -1.0 : Negative </li>
+                                                                                                                                                                                    <li> ~  0.0 : Neutral </li>
+                                                                                                                                                                                    <li> ~  1.0 : Positive </li>
+                                                                                                                                                                               </ul>
+
+                                                                                                                                                                           Subjectivity:
+                                                                                                                                                                           <ul>
+                                                                                                                                                                                      <li> 0.0 : Very objective </li>
+                                                                                                                                                                                      <li< 1.0 : Very subjective</li>
+                                                                                                                                                                            </ul>
+                                                                                                                                                                           Readibility:
+                                                                                                                                                                            <ul>
+                                                                                                                                                                                        <li>0 to 60   :  Confusing </li>
+                                                                                                                                                                                        <li>60 to 69  :  Standard</li>
+                                                                                                                                                                                        <li>70 to 100 :  Easy</li>
+                                                                                                                                                                                        </ul>" data-html="true">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+
+            Score details
+                </button>
+                </div>
+            </div>
             {% if current_users_profile %}
             <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#modalNewFolder"><i class="fa fa-folder"></i> New
             </button>
