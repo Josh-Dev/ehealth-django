@@ -2,8 +2,9 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
 });
 $(document).ready(function(){
-    $('[data-toggle="popover"]').popover();
+    $('[data-toggle="popover"]').popover({trigger: "hover"});
 });
+
 var $gp;
 
 function setSelectedPage(thePage) {

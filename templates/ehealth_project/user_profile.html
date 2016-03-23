@@ -28,8 +28,8 @@
         <div class="col-xs-12">
             <div class="row">
             <br />
-            <div class="col-md-2 col-xs-12"><h4><a href="#" data-toggle="collapse" data-target="#userFolders">My Categories</a></h4></div>
-            <div class="col-md-2 col-xs-12"><button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="right" data-content="Polarity:
+            <div class="col-md-2 col-xs-12"><h4><a href="#" data-toggle="collapse" data-target="#userFolders">My Categories</a></h4>
+            <a href="#" data-container="body" data-toggle="popover" data-placement="right" data-content="Polarity:
                                                                                                                                                                              <ul>
                                                                                                                                                                                     <li> ~ -1.0 : Negative </li>
                                                                                                                                                                                     <li> ~  0.0 : Neutral </li>
@@ -48,9 +48,11 @@
                                                                                                                                                                                         <li>70 to 100 :  Easy</li>
                                                                                                                                                                                         </ul>" data-html="true">
                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-
-            Score details
-                </button>
+                How do we score?</a><br/>
+            
+            
+            </div><!--//Container-->
+            <div class="col-md-2 col-xs-12">
                 </div>
             </div>
             {% if current_users_profile %}
@@ -68,7 +70,7 @@
                     <tbody>
                     {% for uf in users_folders %}
                     <tr>
-                        <td><a href="{% url 'user_profile' user_prof %}{{ uf.slug }}">{{ uf }}</a>{% if current_users_profile %}<a href="{% url 'delete_folder' uf.id %}"><i class="fa fa-times"></i></a>{% endif %}</td>
+                        <td><a href="{% url 'user_profile' user_prof %}{{ uf.slug }}">{{ uf }}</a>{% if current_users_profile %}<a class="eh-delete-x" href="{% url 'delete_folder' uf.id %}"><i class="fa fa-times"></i></a>{% endif %}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -88,7 +90,7 @@
                     <div class="list-group-item">
                         <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
                                     <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
-                                    {% if current_users_profile %}<a href="{% url 'delete_page' p.id current_folder.slug %}"><i class="fa fa-times"></i></a>{% endif %}
+                                    {% if current_users_profile %}<a class="eh-delete-x" href="{% url 'delete_page' p.id current_folder.slug %}"><i class="fa fa-times"></i></a>{% endif %}
                                 </h4>
                         <p class="list-group-item-text">{{ p.summary }}</p>
                     </div>
