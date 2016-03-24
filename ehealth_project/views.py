@@ -277,6 +277,7 @@ def delete_folder(request, id):
 
     return redirect('/ehealth/user_profile/'+str(request.user))
 
+@login_required
 def delete_page(request, id, current_folder):
     #page_id = request.GET.get('page_id')
     #page_curr = request.GET.get('page_current')
@@ -285,3 +286,15 @@ def delete_page(request, id, current_folder):
     Page.objects.get(pk=id).delete()
 
     return redirect('/ehealth/user_profile/'+str(request.user)+"/"+str(current_folder))
+
+@login_required
+def change_privacy(request,id):
+    #Change privacy value
+    folder = Folder.objects.get(pk=id)
+    folder.privacy = not folder.privacy
+    print folder.privacy
+    folder.save()
+
+    return redirect('/ehealth/user_profile/'+str(request.user))
+
+

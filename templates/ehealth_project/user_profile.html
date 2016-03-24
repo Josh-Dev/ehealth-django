@@ -70,7 +70,18 @@
                     <tbody>
                     {% for uf in users_folders %}
                     <tr>
-                        <td><a href="{% url 'user_profile' user_prof %}{{ uf.slug }}">{{ uf }}</a>{% if current_users_profile %}<a class="eh-delete-x" href="{% url 'delete_folder' uf.id %}"><i class="fa fa-times"></i></a>{% endif %}</td>
+                        <td><a href="{% url 'user_profile' user_prof %}{{ uf.slug }}">{{ uf }}</a>
+                            {% if current_users_profile %}
+                                <a class="" href="{% url 'change_privacy' uf.id %}">
+                                    {% if uf.privacy %}
+                                        <i class="fa fa-lock"></i>
+                                    {% else %}
+                                        <i class="fa fa-unlock"></i>
+                                    {% endif %}
+                                </a>
+                                <a class="eh-delete-x" href="{% url 'delete_folder' uf.id %}"><i class="fa fa-times"></i></a>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -90,7 +101,9 @@
                     <div class="list-group-item">
                         <h4 class="list-group-item-heading"><a href="{{ p.url }}">{{ p }}</a>
                                     <a href="#" data-placement="left" data-html="true" data-toggle="tooltip" title="Readability: {{ p.readability_score }}<br/>Subjectivity: {{ p.objectivity_score }}<br/>Sentimentality: {{ p.sentimentality_score }}" class="label label-default eh-score-result">Score</a>
-                                    {% if current_users_profile %}<a class="eh-delete-x" href="{% url 'delete_page' p.id current_folder.slug %}"><i class="fa fa-times"></i></a>{% endif %}
+                                    {% if current_users_profile %}
+                                        <a class="eh-delete-x" href="{% url 'delete_page' p.id current_folder.slug %}"><i class="fa fa-times"></i></a>
+                                    {% endif %}
                                 </h4>
                         <p class="list-group-item-text">{{ p.summary }}</p>
                     </div>
