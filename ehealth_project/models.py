@@ -6,7 +6,7 @@ class UserProfile(models.Model):
 	# user that the profile belongs to
 	user = models.OneToOneField(User)
 	# date of birth of User
-	dob = models.DateField()
+	
 	age = models.IntegerField(default=18)
 	# address of the user
 	address_1 = models.CharField(max_length=128)
