@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 
 def populate():
 
-	add_user(username="John",password="1234", email="john@email.com",dob="1980-05-12", gender="human")
+	add_user(username="John",password="1234", email="john@email.com",age=34, gender="human")
 	generic_user_profile = UserProfile.objects.all().get(user=User.objects.all().get(username="John"))
 
 	test_cat_1 = add_cat(generic_user_profile,"diabetes",True)
@@ -39,22 +39,22 @@ def populate():
 		for p in Page.objects.filter(folder=f):
 			print "- {0} - {1}".format(str(f), str(p))
 
-	add_user(username="jen", password="jen", email="jen@email.com",dob="1980-05-12", gender="Female")
+	add_user(username="jen", password="jen", email="jen@email.com",age=23, gender="Female")
 
-	add_user(username="jill", password="jill", email="jill@email.com",dob="1987-05-12", gender="Male")
+	add_user(username="jill", password="jill", email="jill@email.com",age=76, gender="Male")
 
-	add_user(username="bob", password="bob", email="bob@email.com",dob="1980-05-12", gender="Male")
+	add_user(username="bob", password="bob", email="bob@email.com",age=51, gender="Male")
 
-	add_user(username="Fred", password="7455", email="fred@email.com",dob="1987-11-02", gender="Female")
+	add_user(username="Fred", password="7455", email="fred@email.com",age=53, gender="Female")
 
 	for u in UserProfile.objects.all():
 		print "-{0}".format(str(u))
 
-def add_user(username, password, email, dob, gender):
+def add_user(username, password, email, age, gender):
 	u = User.objects.get_or_create(username=username, email=email, is_superuser=False, is_staff=False)[0]
 	u.set_password(password)
 	u.save()
-	up = UserProfile.objects.get_or_create(user=u,dob=dob, gender=gender)[0]
+	up = UserProfile.objects.get_or_create(user=u,age=age, gender=gender)[0]
 	up.save()
 	return up
 

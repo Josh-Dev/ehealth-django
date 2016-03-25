@@ -2,9 +2,6 @@
 {% load staticfiles %}
 {% block title %} Create Your Account {% endblock %}
 {% block body_block %}
-
-	<button type="button" onClick="window.location='/login/">Login</button> 
-	<button type="button" onClick="window.location='/register/">Register</button> 
 	{%if registered%}
 	<strong>Thank you for registering</strong>
 	<a href="/ehealth/">Return</a><br />
@@ -16,7 +13,7 @@
     {% endif %}
 	<p>
 	<strong>Create Your Account</strong><br />
-	<form id="user_form" method="post" action="/ehealth/register/" enctype="multipart/form-data">
+	<form id="user_form" method="post" action="/accounts/login/" enctype="multipart/form-data">
 	{% csrf_token %}
     {{ user_form.as_p }}
 	{{ profile_form.as_p }}
